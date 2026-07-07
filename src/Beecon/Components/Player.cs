@@ -1,6 +1,6 @@
 ﻿namespace Beecon.Components;
 
-public sealed class Player { }
+public struct Player { }
 
 public static class ScenePlayerExtensions
 {

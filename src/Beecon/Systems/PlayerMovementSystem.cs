@@ -18,7 +18,7 @@ public sealed class PlayerMovementSystem : GameSystem
 
     public override void FixedUpdate()
     {
-        foreach (var (entity, player, body) in Entries<Player, Body>())
+        foreach (var (_, body) in Components<Player, Body>())
         {
             var desiredVelocity = _movement * MaxSpeed;
             var currentVelocity = body.LinearVelocity;

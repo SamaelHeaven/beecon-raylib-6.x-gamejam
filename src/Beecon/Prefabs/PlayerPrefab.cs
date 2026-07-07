@@ -1,4 +1,5 @@
 ﻿using Beecon.Components;
+using Beecon.Physics;
 
 namespace Beecon.Prefabs;
 
@@ -8,8 +9,15 @@ public struct PlayerPrefab : IPrefab
     {
         var body = entity.Scene.World.CreateBody(new BodyDef { Type = BodyType.Dynamic });
 
-        body.CreateShape(new ShapeDef(), CircleShape.Make(25));
+        body.CreateShape(
+            new ShapeDef { Filter = new ShapeFilter { Category = ShapeFilterCategory.Player } },
+            CircleShape.Make(25)
+        );
 
-        entity.Set(new Player()).Set(body).Set(new Circle(Color.Red) { Scale = 50 });
+        entity
+            .SetZIndex(1000)
+            .Set(new Player())
+            .Set(body)
+            .Set(new Circle(Color.Red) { Scale = 50 });
     }
 }

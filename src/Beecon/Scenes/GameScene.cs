@@ -10,7 +10,20 @@ public sealed class GameScene : BaseScene
         Scene.Entity().SetZIndex(-1).Set(new Grid(64, Color.Gray) { Scale = 10_000, Thick = 2 });
 
         // Player
-        var player = Scene.Entity();
-        new PlayerPrefab().Build(player);
+        new PlayerPrefab().Build(Scene.Entity());
+
+        // Bees
+        for (var i = 0; i < 5; i++)
+        {
+            var rnd = Random.Shared;
+            new BeePrefab().Build(
+                Scene
+                    .Entity()
+                    .SetPosition(
+                        new Vector2(rnd.Next((int)Display.Width), rnd.Next((int)Display.Height))
+                            - Display.Size / 2
+                    )
+            );
+        }
     }
 }
