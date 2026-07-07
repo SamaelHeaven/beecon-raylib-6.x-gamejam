@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType Condition="'$(Configuration)' == 'Debug'">Exe</OutputType>
+    <OutputType Condition="'$(Configuration)' == 'Release'">WinExe</OutputType>
+    <DebugSymbols Condition="'$(Configuration)' == 'Release'">false</DebugSymbols>
+    <DebugType Condition="'$(Configuration)' == 'Release'">none</DebugType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimMode>full</TrimMode>
+    <SelfContained>true</SelfContained>
+    <MSBuildEnableWorkloadResolver>false</MSBuildEnableWorkloadResolver>
+    <WasmHtmlTemplate>index.html</WasmHtmlTemplate>
+    <ServerGarbageCollection>false</ServerGarbageCollection>
+    <ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\**\*">
+      <LogicalName>$([System.String]::Copy('%(RecursiveDir)').Replace('\','/').Replace('/','.'))%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Vigilance" Version="0.1.0" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
+      <ItemGroup>
+        <PackageReference Include="Microsoft.DotNet.ILCompiler.LLVM" Version="10.0.0-*" />
+        <PackageReference
+          Include="runtime.$(NETCoreSdkPortableRuntimeIdentifier).Microsoft.DotNet.ILCompiler.LLVM"
+          Version="10.0.0-*"
+        />
+        <DirectPInvoke Include="libc" />
+        <DirectPInvoke Include="box2d" />
+        <DirectPInvoke Include="freetype" />
+        <DirectPInvoke Include="raylib" />
+        <NativeLibrary Include="$(Box2dPath)" />
+        <NativeLibrary Include="$(FreetypePath)" />
+        <NativeLibrary Include="$(RaylibPath)" />
+        <LinkerArg Include="-O3 -sUSE_GLFW=3 -sMIN_WEBGL_VERSION=2 -sMAX_WEBGL_VERSION=2 -sALLOW_MEMORY_GROWTH=1 -sFETCH" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <PublishSingleFile>true</PublishSingleFile>
+        <!-- <PublishAot>true</PublishAot> -->
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+</Project>
