@@ -5,7 +5,8 @@ namespace Beecon.Systems;
 
 public sealed class PlayerMovementSystem : GameSystem
 {
-    private const float Acceleration = 100f;
+    private const float MaxSpeed = 200f;
+    private const float Acceleration = 5f;
 
     private Vector2 _movement;
 
@@ -18,8 +19,13 @@ public sealed class PlayerMovementSystem : GameSystem
 
     public override void FixedUpdate()
     {
-        var force = _movement * Acceleration;
         foreach (var (entity, player, body) in Entries<Player, Body>())
+        {
+            var desiredVelocity = _movement * MaxSpeed;
+            var currentVelocity = body.LinearVelocity;
+            var velocityChange = desiredVelocity - currentVelocity;
+            var force = velocityChange * Acceleration;
             body.ApplyForce(force);
+        }
     }
 }
