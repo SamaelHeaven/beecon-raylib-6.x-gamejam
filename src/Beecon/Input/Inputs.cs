@@ -16,10 +16,12 @@ public static class Inputs
 
     public static InputButton BeeSpreadButton { get; } =
         new() { MouseButtons = [MouseButton.Right] };
+
     public static InputButton FullscreenButton { get; } = new() { Keys = [Key.Tab] };
     public static InputButton ExitButton { get; } = new() { Keys = [Key.Escape] };
-    public static InputButton DebugButton { get; } = new() { Keys = [Key.F1] };
-    public static InputButton RestartButton { get; } = new() { Keys = [Key.F2] };
+    public static InputButton DebugModifierButton { get; } = new() { Keys = [Key.LeftShift] };
+    public static InputButton DebugToggleButton { get; } = new() { Keys = [Key.One] };
+    public static InputButton DebugRestartButton { get; } = new() { Keys = [Key.Two] };
 
     #endregion
 }

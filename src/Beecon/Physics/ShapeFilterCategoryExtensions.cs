@@ -4,7 +4,7 @@ public static class ShapeFilterCategoryExtensions
 {
     extension(ShapeFilterCategory)
     {
-        public static ShapeFilterCategory Player => (ShapeFilterCategory)(1 << 1);
-        public static ShapeFilterCategory Bee => (ShapeFilterCategory)(1 << 2);
+        public static ShapeFilterCategory Player => (ShapeFilterCategory)(1L << 1);
+        public static ShapeFilterCategory Bee => (ShapeFilterCategory)(1L << 2);
     }
 }

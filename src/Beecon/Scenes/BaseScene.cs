@@ -19,9 +19,11 @@ public abstract class BaseScene : GameSystem
     public override void Update()
     {
 #if DEBUG
-        if (Inputs.DebugButton.IsPressed)
+        if (!Inputs.DebugModifierButton.IsDown)
+            return;
+        if (Inputs.DebugToggleButton.IsPressed)
             IsDebugEnabled = !IsDebugEnabled;
-        if (Inputs.RestartButton.IsPressed)
+        if (Inputs.DebugRestartButton.IsPressed)
             Game.Scene = new Scene(Scene.SystemsFunc);
 #endif
     }
