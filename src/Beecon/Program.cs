@@ -22,11 +22,13 @@ var config = Config
         world.DefaultGravity = Vector2.Zero;
     })
     .Systems(() =>
-    [
-        new DrawableSystem(),
-        new PhysicsSystem { Order = 1 },
-        new PlayerMovementSystem()
-    ])
+        [
+            new DrawableSystem(),
+            new PhysicsSystem { Order = 1 },
+            new PlayerMovementSystem(),
+            new CameraSystem(),
+        ]
+    )
     .Build();
 
 Game.Launch(config, scene);

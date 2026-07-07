@@ -5,10 +5,9 @@ namespace Beecon.Systems;
 
 public sealed class PlayerMovementSystem : GameSystem
 {
-    private const float MaxSpeed = 200f;
-    private const float Acceleration = 5f;
-
     private Vector2 _movement;
+    private static float Acceleration => 5f;
+    private static float MaxSpeed => 225f;
 
     public override void Update()
     {

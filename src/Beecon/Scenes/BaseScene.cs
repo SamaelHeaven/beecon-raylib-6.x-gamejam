@@ -9,7 +9,11 @@ public abstract class BaseScene : GameSystem
     public bool IsDebugEnabled
     {
         get;
-        set => PhysicsSystem.IsDebugDrawEnabled = value;
+        set
+        {
+            field = value;
+            PhysicsSystem.IsDebugDrawEnabled = field;
+        }
     } = false;
 
     public override void Update()
@@ -17,6 +21,14 @@ public abstract class BaseScene : GameSystem
 #if DEBUG
         if (Inputs.DebugButton.IsPressed)
             IsDebugEnabled = !IsDebugEnabled;
+        if (Inputs.RestartButton.IsPressed)
+            Game.Scene = new Scene(Scene.SystemsFunc);
 #endif
+    }
+
+    public override void PostRender()
+    {
+        if (IsDebugEnabled)
+            Renderer.Graphics.FillText($"FPS: {Time.AverageFps}", 0, 0);
     }
 }

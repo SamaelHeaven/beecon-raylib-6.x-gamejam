@@ -17,6 +17,7 @@ public static class Inputs
     public static InputButton FullscreenButton { get; } = new() { Keys = [Key.Tab] };
     public static InputButton ExitButton { get; } = new() { Keys = [Key.Escape] };
     public static InputButton DebugButton { get; } = new() { Keys = [Key.F1] };
+    public static InputButton RestartButton { get; } = new() { Keys = [Key.F2] };
 
     #endregion
 }
