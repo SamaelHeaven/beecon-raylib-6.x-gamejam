@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGame", "src\MyGame\MyGame.csproj", "{34BF74AB-1F9E-418D-848B-4B8FAAEFF42D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beecon", "src\Beecon\Beecon.csproj", "{34BF74AB-1F9E-418D-848B-4B8FAAEFF42D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
