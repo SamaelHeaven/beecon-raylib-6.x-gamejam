@@ -8,6 +8,7 @@ public sealed class VirusSpawnSystem : GameSystem
 {
     private readonly Timer _spawnTimer = new(SpawnInterval);
     public static int MaxViruses => 50;
+    public static int SpawnCount => 5;
     public static TimeSpan SpawnInterval => TimeSpan.FromSeconds(0.5);
     public static float SpawnMargin => 96;
     public static float SpawnClearanceRadius => 16;
@@ -16,22 +17,25 @@ public sealed class VirusSpawnSystem : GameSystem
     {
         if (!_spawnTimer.Update())
             return;
-        if (Scene.Table<Virus>().Count >= MaxViruses)
-            return;
         var camera = Scene.Camera;
         var half = Display.Size / 2f / camera.Zoom;
         var extentX = half.X + SpawnMargin;
         var extentY = half.Y + SpawnMargin;
         var filter = new ShapeFilter { Category = ShapeFilterCategory.Virus };
-        if (
-            Scene.TryFindSpawnPosition(
-                () => camera.Target + EdgePoint(extentX, extentY),
-                SpawnClearanceRadius,
-                filter,
-                out var position
+        for (var spawned = 0; spawned < SpawnCount; spawned++)
+        {
+            if (Scene.Table<Virus>().Count >= MaxViruses)
+                return;
+            if (
+                Scene.TryFindSpawnPosition(
+                    () => camera.Target + EdgePoint(extentX, extentY),
+                    SpawnClearanceRadius,
+                    filter,
+                    out var position
+                )
             )
-        )
-            new VirusPrefab().Build(Scene.Entity().SetPosition(position));
+                new VirusPrefab().Build(Scene.Entity().SetPosition(position));
+        }
     }
 
     private static Vector2 EdgePoint(float extentX, float extentY)
