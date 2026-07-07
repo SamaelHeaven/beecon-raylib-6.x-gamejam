@@ -27,7 +27,7 @@ public sealed class GameScene : BaseScene
         }
 
         // Viruses
-        for (var i = 0; i < 200; i++)
+        for (var i = 0; i < 100; i++)
         {
             var rnd = Random.Shared;
             new VirusPrefab().Build(

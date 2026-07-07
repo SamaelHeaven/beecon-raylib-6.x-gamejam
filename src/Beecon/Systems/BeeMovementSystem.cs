@@ -1,5 +1,6 @@
 using Beecon.Components;
 using Beecon.Input;
+using Beecon.Physics;
 
 namespace Beecon.Systems;
 
@@ -36,15 +37,7 @@ public sealed class BeeMovementSystem : GameSystem
     {
         var mouseWorldPosition = Mouse.WorldPosition;
         foreach (var (_, _, body) in Entries<Bee, Body>())
-        {
-            var offset = mouseWorldPosition - body.Position;
-            var distance = offset.Length();
-            var speedScale = MathF.Min(distance / ArrivalRadius, 1f);
-            var desiredVelocity =
-                distance > 0.01f ? offset / distance * MaxSpeed * speedScale : Vector2.Zero;
-            var velocityChange = desiredVelocity - body.LinearVelocity;
-            body.ApplyForce(velocityChange * Acceleration);
-        }
+            body.Arrive(mouseWorldPosition, MaxSpeed, Acceleration, ArrivalRadius);
     }
 
     private void Spread()
@@ -61,13 +54,7 @@ public sealed class BeeMovementSystem : GameSystem
             var angle = 2f * MathF.PI / count * i;
             var targetPosition =
                 playerPosition + new Vector2(MathF.Cos(angle), MathF.Sin(angle)) * SpreadRadius;
-            var offset = targetPosition - body.Position;
-            var distance = offset.Length();
-            var speedScale = MathF.Min(distance / SpreadArrivalRadius, 1f);
-            var desiredVelocity =
-                distance > 0.01f ? offset / distance * SpreadMaxSpeed * speedScale : Vector2.Zero;
-            var velocityChange = desiredVelocity - body.LinearVelocity;
-            body.ApplyForce(velocityChange * SpreadAcceleration);
+            body.Arrive(targetPosition, SpreadMaxSpeed, SpreadAcceleration, SpreadArrivalRadius);
             i++;
         }
     }

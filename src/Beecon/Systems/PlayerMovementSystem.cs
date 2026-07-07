@@ -1,5 +1,6 @@
 ﻿using Beecon.Components;
 using Beecon.Input;
+using Beecon.Physics;
 
 namespace Beecon.Systems;
 
@@ -19,12 +20,6 @@ public sealed class PlayerMovementSystem : GameSystem
     public override void FixedUpdate()
     {
         foreach (var (_, _, body) in Entries<Player, Body>())
-        {
-            var desiredVelocity = _movement * MaxSpeed;
-            var currentVelocity = body.LinearVelocity;
-            var velocityChange = desiredVelocity - currentVelocity;
-            var force = velocityChange * Acceleration;
-            body.ApplyForce(force);
-        }
+            body.Seek(_movement * MaxSpeed, Acceleration);
     }
 }
