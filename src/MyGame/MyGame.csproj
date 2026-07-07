@@ -35,10 +35,8 @@
           Version="10.0.0-*"
         />
         <DirectPInvoke Include="libc" />
-        <DirectPInvoke Include="box2d" />
         <DirectPInvoke Include="freetype" />
         <DirectPInvoke Include="raylib" />
-        <NativeLibrary Include="$(Box2dPath)" />
         <NativeLibrary Include="$(FreetypePath)" />
         <NativeLibrary Include="$(RaylibPath)" />
         <LinkerArg Include="-O3 -sUSE_GLFW=3 -sMIN_WEBGL_VERSION=2 -sMAX_WEBGL_VERSION=2 -sALLOW_MEMORY_GROWTH=1 -sFETCH" />
