@@ -25,5 +25,19 @@ public sealed class GameScene : BaseScene
                     )
             );
         }
+
+        // Viruses
+        for (var i = 0; i < 50; i++)
+        {
+            var rnd = Random.Shared;
+            new VirusPrefab().Build(
+                Scene
+                    .Entity()
+                    .SetPosition(
+                        new Vector2(rnd.Next((int)Display.Width), rnd.Next((int)Display.Height))
+                            - Display.Size / 2
+                    )
+            );
+        }
     }
 }

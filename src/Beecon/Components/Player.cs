@@ -6,6 +6,6 @@ public static class ScenePlayerExtensions
 {
     extension(Scene scene)
     {
-        public Entity PlayerEntity => scene.Entities<Player>().First();
+        public Entity Player => scene.Entities<Player>().AsValueEnumerable().First();
     }
 }

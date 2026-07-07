@@ -39,10 +39,14 @@ public sealed class BeeMovementSystem : GameSystem
 
     private void Spread()
     {
-        var playerPosition = Scene.PlayerEntity.Get<Body>().Position;
+        var playerPosition = Scene.Player.Get<Body>().Position;
         var count = Scene.Table<Bee>().Count;
         var i = 0;
-        foreach (var (_, _, body) in Entries<Bee, Body>().OrderBy(entry => entry.Item1.Index))
+        foreach (
+            var (_, _, body) in Entries<Bee, Body>()
+                .AsValueEnumerable()
+                .OrderBy(entry => entry.Item1.Index)
+        )
         {
             var angle = 2f * MathF.PI / count * i;
             var targetPosition =

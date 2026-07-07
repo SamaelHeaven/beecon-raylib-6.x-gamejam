@@ -3,7 +3,7 @@ using Beecon.Physics;
 
 namespace Beecon.Prefabs;
 
-public struct BeePrefab : IPrefab
+public struct VirusPrefab : IPrefab
 {
     public void Build(Entity entity)
     {
@@ -14,18 +14,18 @@ public struct BeePrefab : IPrefab
             {
                 Filter = new ShapeFilter
                 {
-                    Category = ShapeFilterCategory.Bee,
-                    Mask = ShapeFilterCategory.Wall | ShapeFilterCategory.Bee,
+                    Category = ShapeFilterCategory.Virus,
+                    Mask = ShapeFilterCategory.Wall | ShapeFilterCategory.Virus,
                 },
             },
-            CircleShape.Make(10)
+            CircleShape.Make(14)
         );
 
         entity
-            .SetZIndex(1500)
-            .Set(new Bee())
+            .SetZIndex(1300)
+            .Set(new Virus())
             .Set(body)
-            .Set(new Circle(Color.Yellow) { Scale = 20 })
+            .Set(new Circle(Color.Green) { Scale = 28 })
             .Set(new Health());
     }
 }

@@ -18,6 +18,7 @@ public struct PlayerPrefab : IPrefab
             .SetZIndex(1000)
             .Set(new Player())
             .Set(body)
-            .Set(new Circle(Color.Red) { Scale = 50 });
+            .Set(new Circle(Color.Red) { Scale = 50 })
+            .Set(new Health());
     }
 }
