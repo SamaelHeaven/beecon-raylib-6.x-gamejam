@@ -16,7 +16,7 @@ public struct BeaconPrefab : IPrefab
             .Set(
                 new RegularPolygon(Gameplay.Beacon.Sides, Visuals.Beacon.DeactivatedColor)
                 {
-                    Scale = Gameplay.Beacon.Radius * 2f,
+                    Scale = Visuals.Beacon.Size,
                 }
             );
 

@@ -29,6 +29,8 @@ var config = Config
         [
             new DebugSystem(),
             new DrawableSystem(),
+            new SpriteBatchSystem(),
+            new AnimationSystem(),
             new UISystem(),
             new PhysicsSystem { Order = 1 },
             new PlayerMovementSystem(),

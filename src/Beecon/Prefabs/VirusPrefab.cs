@@ -20,7 +20,7 @@ public struct VirusPrefab(VirusType type = VirusType.Normal, int mergeCount = 0)
             .SetZIndex(Visuals.Virus.ZIndex)
             .Set(new Virus { Type = Type, MergeCount = MergeCount })
             .Set(body)
-            .Set(new Circle(ColorOf(Type)) { Scale = radius * 2f })
+            .Set(new Circle(ColorOf(Type)) { Scale = radius * Visuals.Virus.SizeScale })
             .Set(new Health(HealthOf(Type)))
             .Set(
                 new Damage(

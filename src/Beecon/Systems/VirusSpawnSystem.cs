@@ -20,7 +20,7 @@ public sealed class VirusSpawnSystem : GameSystem
         var candidate = () => camera.Target + EdgePoint(extentX, extentY);
         for (var spawned = 0; spawned < Gameplay.Virus.SpawnCount; spawned++)
         {
-            if (Scene.Table<Virus>().Count >= Gameplay.Virus.MaxCount)
+            if (Scene.Count<Virus>() >= Gameplay.Virus.MaxCount)
                 return;
             if (
                 Scene.TryFindSpawnPosition(

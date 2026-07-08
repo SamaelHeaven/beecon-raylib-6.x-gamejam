@@ -16,7 +16,7 @@ public struct ExperiencePrefab(float amount, Color color) : IPrefab
             .SetZIndex(Visuals.Experience.ZIndex)
             .Set(new Experience(Amount))
             .Set(body)
-            .Set(new Circle(Color) { Scale = Gameplay.Experience.Radius * 2f });
+            .Set(new Circle(Color) { Scale = Visuals.Experience.Size });
 
         body.CreateShape(
             new ShapeDef

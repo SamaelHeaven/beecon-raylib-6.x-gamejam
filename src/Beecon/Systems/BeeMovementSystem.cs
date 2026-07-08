@@ -22,6 +22,7 @@ public sealed class BeeMovementSystem : GameSystem
             Spread();
         else
             FollowMouse();
+        RotateTowardMouse();
     }
 
     private void FollowMouse()
@@ -36,13 +37,26 @@ public sealed class BeeMovementSystem : GameSystem
             );
     }
 
+    private void RotateTowardMouse()
+    {
+        var mouseWorldPosition = Mouse.WorldPosition;
+        foreach (var (_, _, body) in Entries<Bee, Body>())
+        {
+            var offset = mouseWorldPosition - body.Position;
+            if (offset == Vector2.Zero)
+                continue;
+            var target = MathF.Atan2(offset.Y, offset.X) * (180f / MathF.PI);
+            body.Rotation = float.LerpAngle(body.Rotation, target, Gameplay.Bee.RotationSmoothing);
+        }
+    }
+
     private void Spread()
     {
         var player = Scene.Player;
         if (player.IsNull)
             return;
         var playerPosition = player.Position;
-        var count = Scene.Table<Bee>().Count;
+        var count = Scene.Count<Bee>();
         var i = 0;
         foreach (
             var (_, _, body) in Entries<Bee, Body>()

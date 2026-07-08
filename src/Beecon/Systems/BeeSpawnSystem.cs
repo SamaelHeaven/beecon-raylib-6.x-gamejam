@@ -15,7 +15,7 @@ public sealed class BeeSpawnSystem : GameSystem
         var player = Scene.Player;
         if (player.IsNull)
             return;
-        if (Scene.Table<Bee>().Count >= player.Get<Player>().MaxBees)
+        if (Scene.Count<Bee>() >= player.Get<Player>().MaxBees)
             return;
         var playerPosition = player.Position;
         var filter = new ShapeFilter { Category = ShapeCategory.Bee };

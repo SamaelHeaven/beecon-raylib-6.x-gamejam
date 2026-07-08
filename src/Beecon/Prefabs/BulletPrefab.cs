@@ -17,7 +17,7 @@ public struct BulletPrefab(Vector2 velocity) : IPrefab
             .SetZIndex(Visuals.Bullet.ZIndex)
             .Set(new Bullet())
             .Set(body)
-            .Set(new Circle(Visuals.Bullet.Color) { Scale = Gameplay.Bullet.Radius * 2f })
+            .Set(new Circle(Visuals.Bullet.Color) { Scale = Visuals.Bullet.Size })
             .Set(new Health(Gameplay.Bullet.Health))
             .Set(
                 new Damage(

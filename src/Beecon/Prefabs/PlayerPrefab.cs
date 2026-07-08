@@ -14,7 +14,13 @@ public struct PlayerPrefab : IPrefab
             .SetZIndex(Visuals.Player.ZIndex)
             .Set(new Player())
             .Set(body)
-            .Set(new Circle(Visuals.Player.Color) { Scale = Gameplay.Player.Radius * 2f })
+            .Set(new Sprite { Scale = Visuals.Player.Size })
+            .Set(
+                new SpriteAnimation(
+                    Visuals.Player.TextureAtlas.GetSpriteAnimationFrames(0, 3),
+                    Visuals.Player.AnimationDelay
+                )
+            )
             .Set(new Health(Gameplay.Player.Health))
             .Set(
                 new Damage(
@@ -32,10 +38,9 @@ public struct PlayerPrefab : IPrefab
                     .Set(new UIHealthBar());
             });
 
-        var shape = CircleShape.Make(Gameplay.Player.Radius);
         body.CreateShape(
             new ShapeDef { Filter = new ShapeFilter { Category = ShapeCategory.Player } },
-            shape
+            CircleShape.Make(Gameplay.Player.Radius)
         );
 
         body.CreateShape(
@@ -44,7 +49,7 @@ public struct PlayerPrefab : IPrefab
                 IsSensor = true,
                 Filter = new ShapeFilter { Category = ShapeCategory.PlayerSensor },
             },
-            shape
+            CircleShape.Make(Gameplay.Player.SensorRadius)
         );
     }
 }

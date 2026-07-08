@@ -11,6 +11,7 @@ public static class Gameplay
     public static class Player
     {
         public static float Radius => 25f;
+        public static float SensorRadius => 25f;
         public static float Health => 1_000f;
         public static float Damage => 50f;
         public static TimeSpan DamageCooldown => TimeSpan.FromMilliseconds(200);
@@ -22,6 +23,7 @@ public static class Gameplay
     public static class Bee
     {
         public static float Radius => 10f;
+        public static float SensorRadius => 20f;
         public static float Health => 150f;
         public static float Damage => 5f;
         public static TimeSpan DamageCooldown => TimeSpan.FromMilliseconds(200);
@@ -29,6 +31,7 @@ public static class Gameplay
         public static float MaxSpeed => 325f;
         public static float ArrivalRadius => Radius;
         public static float SpreadRadius => 120f;
+        public static float RotationSmoothing => 0.2f;
         public static TimeSpan SpawnInterval => TimeSpan.FromSeconds(0.2);
         public static float SpawnRadius => 60f;
         public static float SpawnClearanceRadius => Radius;
@@ -64,7 +67,7 @@ public static class Gameplay
         public static float ShieldExperience => 60f;
         public static float BarrierThickness => 10f;
         public static float BarrierWidth => ShieldRadius * 2.4f;
-        public static float BarrierOffset => ShieldRadius + BarrierThickness * 0.5f;
+        public static float BarrierOffset => ShieldRadius + BarrierThickness * 1.5f;
         public static float BarrierDensity => 1_000f;
     }
 
