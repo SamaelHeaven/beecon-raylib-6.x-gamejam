@@ -50,7 +50,7 @@ public static class Gameplay
         public static TimeSpan SpawnInterval => TimeSpan.FromSeconds(0.5);
         public static float SpawnMargin => 96f;
         public static float SpawnClearanceRadius => Radius;
-        public static float DespawnDistance => 1_200f;
+        public static float DespawnDistance => 1_600f;
         public static float MergeGrowth => 4f;
         public static int MergesPerPromotion => 5;
         public static TimeSpan MergeInterval => TimeSpan.FromSeconds(1);
