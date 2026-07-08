@@ -3,28 +3,27 @@ using Beecon.Physics;
 
 namespace Beecon.Prefabs;
 
-public struct VirusPrefab(bool big = false) : IPrefab
+public struct VirusPrefab(VirusType type = VirusType.Normal, int mergeCount = 0) : IPrefab
 {
-    public bool Big { get; set; } = big;
+    public VirusType Type { get; set; } = type;
+    public int MergeCount { get; set; } = mergeCount;
 
     public void Build(Entity entity)
     {
         var body = entity.Scene.World.CreateBody(new BodyDef { Type = BodyType.Dynamic });
 
-        var radius = Big ? Gameplay.Virus.BigRadius : Gameplay.Virus.Radius;
-        var health = Big ? Gameplay.Virus.BigHealth : Gameplay.Virus.Health;
-        var damage = Big ? Gameplay.Virus.BigDamage : Gameplay.Virus.Damage;
-        var color = Big ? Color.DarkGreen : Color.Green;
+        var radius = RadiusOf(Type, MergeCount);
+        var color = Type == VirusType.Normal ? Color.Green : Color.DarkGreen;
 
         entity
             .SetZIndex(1300)
-            .Set(new Virus { CanMerge = !Big })
+            .Set(new Virus { Type = Type, MergeCount = MergeCount })
             .Set(body)
             .Set(new Circle(color) { Scale = radius * 2f })
-            .Set(new Health(health))
+            .Set(new Health(HealthOf(Type)))
             .Set(
                 new Damage(
-                    damage,
+                    DamageOf(Type),
                     Gameplay.Virus.DamageCooldown,
                     ShapeCategory.Player | ShapeCategory.Bee
                 )
@@ -52,7 +51,34 @@ public struct VirusPrefab(bool big = false) : IPrefab
             shape
         );
 
-        if (Big)
+        if (Type == VirusType.Turret)
             entity.Scope(scene => new TurretPrefab().Build(scene.Entity()));
+    }
+
+    private static float RadiusOf(VirusType type, int mergeCount)
+    {
+        return type switch
+        {
+            VirusType.Turret => Gameplay.Virus.TurretRadius,
+            _ => Gameplay.Virus.Radius + mergeCount * Gameplay.Virus.MergeGrowth,
+        };
+    }
+
+    private static float HealthOf(VirusType type)
+    {
+        return type switch
+        {
+            VirusType.Turret => Gameplay.Virus.TurretHealth,
+            _ => Gameplay.Virus.Health,
+        };
+    }
+
+    private static float DamageOf(VirusType type)
+    {
+        return type switch
+        {
+            VirusType.Turret => Gameplay.Virus.TurretDamage,
+            _ => Gameplay.Virus.Damage,
+        };
     }
 }

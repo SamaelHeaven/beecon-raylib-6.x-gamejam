@@ -1,49 +1,111 @@
 using Beecon.Components;
-using Beecon.Physics;
 using Beecon.Prefabs;
 
 namespace Beecon.Systems;
 
 public sealed class VirusMergeSystem : GameSystem
 {
-    private ValueList<Entity> _cluster = [];
-    private ValueHashSet<Entity> _consumed = [];
+    private readonly EntitySparseSet<EntitySparseSet<TimeSpan>> _contacts = new();
 
-    public override void Update()
+    public override void WorldContactBegin(Shape shapeA, Shape shapeB)
     {
-        _consumed.Clear();
-        var world = Scene.World;
-        var filter = new ShapeFilter { Category = ShapeCategory.Virus, Mask = ShapeCategory.Virus };
-        var overlapCallback = (Shape shape) =>
+        var a = shapeA.Entity;
+        var b = shapeB.Entity;
+        if (!a.TryGet(out Virus va) || !b.TryGet(out Virus vb))
+            return;
+        if (!CanMerge(va, vb))
+            return;
+        Track(a, b);
+    }
+
+    public override void WorldContactEnd(Shape shapeA, Shape shapeB)
+    {
+        Untrack(shapeA.Entity, shapeB.Entity);
+    }
+
+    public override void FixedUpdate()
+    {
+        for (var i = _contacts.Count - 1; i >= 0; i--)
         {
-            var other = shape.Entity;
-            if (!_consumed.Contains(other) && other.TryGet(out Virus v) && v.CanMerge)
-                _cluster.Add(other);
-        };
-        foreach (var (entity, virus, body) in Entries<Virus, Body>())
-        {
-            if (!virus.CanMerge || _consumed.Contains(entity))
-                continue;
-            _cluster.Clear();
-            world.Overlap(
-                CircleShape.Make(body.Position, Gameplay.Virus.MergeRadius),
-                overlapCallback,
-                filter
-            );
-            if (_cluster.Count < Gameplay.Virus.MergeCount)
-                continue;
-            var centroid = Vector2.Zero;
-            for (var i = 0; i < Gameplay.Virus.MergeCount; i++)
+            var (first, partners) = _contacts[i];
+            if (!first.IsValid)
             {
-                var member = _cluster[i];
-                _consumed.Add(member);
-                centroid += member.Get<Body>().Position;
-                member.Destroy();
+                _contacts.Remove(first);
+                continue;
             }
 
-            new VirusPrefab(big: true).Build(
-                Scene.Entity().SetPosition(centroid / Gameplay.Virus.MergeCount)
-            );
+            for (var j = partners.Count - 1; j >= 0; j--)
+            {
+                var (second, elapsed) = partners[j];
+                if (
+                    !second.IsValid
+                    || !first.TryGet(out Virus va)
+                    || !second.TryGet(out Virus vb)
+                    || !CanMerge(va, vb)
+                )
+                {
+                    partners.Remove(second);
+                    continue;
+                }
+
+                elapsed += Time.FixedDelta;
+                if (elapsed >= Gameplay.Virus.MergeInterval)
+                {
+                    Merge(first, va, second, vb);
+                    partners.Remove(second);
+                    continue;
+                }
+
+                partners[second] = elapsed;
+            }
+
+            if (partners.Count == 0)
+                _contacts.Remove(first);
         }
+    }
+
+    private void Merge(Entity a, Virus va, Entity b, Virus vb)
+    {
+        var position = (a.Get<Body>().Position + b.Get<Body>().Position) / 2f;
+        var type = va.Type;
+        var mergeCount = Math.Max(va.MergeCount, vb.MergeCount) + 1;
+        if (mergeCount >= Gameplay.Virus.MergesPerPromotion)
+        {
+            type = (VirusType)((int)type + 1);
+            mergeCount = 0;
+        }
+
+        a.Destroy();
+        b.Destroy();
+        new VirusPrefab(type, mergeCount).Build(Scene.Entity().SetPosition(position));
+    }
+
+    private static bool CanMerge(Virus a, Virus b)
+    {
+        return a.CanMerge && b.CanMerge && a.Type == b.Type;
+    }
+
+    private void Track(Entity a, Entity b)
+    {
+        Order(ref a, ref b);
+        if (!_contacts.TryGetValue(a, out var partners))
+            _contacts[a] = partners = new EntitySparseSet<TimeSpan>();
+        partners[b] = TimeSpan.Zero;
+    }
+
+    private void Untrack(Entity a, Entity b)
+    {
+        Order(ref a, ref b);
+        if (!_contacts.TryGetValue(a, out var partners))
+            return;
+        partners.Remove(b);
+        if (partners.Count == 0)
+            _contacts.Remove(a);
+    }
+
+    private static new void Order(ref Entity a, ref Entity b)
+    {
+        if (a.Index > b.Index)
+            (a, b) = (b, a);
     }
 }

@@ -2,5 +2,11 @@ namespace Beecon.Components;
 
 public sealed class Virus
 {
-    public bool CanMerge { get; set; } = true;
+    private static readonly VirusType Last = Enum.GetValues<VirusType>()[^1];
+
+    public VirusType Type { get; set; }
+
+    public int MergeCount { get; set; }
+
+    public bool CanMerge => Type != Last;
 }
