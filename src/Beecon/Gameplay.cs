@@ -27,11 +27,11 @@ public static class Gameplay
         public static TimeSpan DamageCooldown => TimeSpan.FromMilliseconds(200);
         public static float Acceleration => 8f;
         public static float MaxSpeed => 325f;
-        public static float ArrivalRadius => 10f;
+        public static float ArrivalRadius => Radius;
         public static float SpreadRadius => 120f;
         public static TimeSpan SpawnInterval => TimeSpan.FromSeconds(0.2);
         public static float SpawnRadius => 60f;
-        public static float SpawnClearanceRadius => 12f;
+        public static float SpawnClearanceRadius => Radius;
     }
 
     public static class Virus
@@ -49,7 +49,7 @@ public static class Gameplay
         public static int SpawnCount => 5;
         public static TimeSpan SpawnInterval => TimeSpan.FromSeconds(0.5);
         public static float SpawnMargin => 96f;
-        public static float SpawnClearanceRadius => 16f;
+        public static float SpawnClearanceRadius => Radius;
         public static float DespawnDistance => 1_200f;
         public static int MergeCount => 20;
         public static float MergeRadius => 100f;
