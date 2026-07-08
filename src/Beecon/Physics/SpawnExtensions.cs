@@ -2,12 +2,14 @@ namespace Beecon.Physics;
 
 public static class SpawnExtensions
 {
+    private static bool _blocked = false;
+
     extension(Scene scene)
     {
         public bool TryFindSpawnPosition(
             Func<Vector2> candidate,
             float clearanceRadius,
-            ShapeFilter filter,
+            in ShapeFilter filter,
             out Vector2 position,
             int maxAttempts = 16
         )
@@ -16,17 +18,17 @@ public static class SpawnExtensions
             for (var attempt = 0; attempt < maxAttempts; attempt++)
             {
                 position = candidate.Invoke();
-                var blocked = false;
+                _blocked = false;
                 world.Overlap(
                     CircleShape.Make(position, clearanceRadius),
-                    _ =>
+                    static _ =>
                     {
-                        blocked = true;
+                        _blocked = true;
                         return false;
                     },
                     filter
                 );
-                if (!blocked)
+                if (!_blocked)
                     return true;
             }
 

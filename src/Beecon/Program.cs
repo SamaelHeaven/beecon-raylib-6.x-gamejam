@@ -28,6 +28,7 @@ var config = Config
     .Systems(() =>
         [
             new DrawableSystem(),
+            new UISystem(),
             new PhysicsSystem { Order = 1 },
             new PlayerMovementSystem(),
             new CameraSystem(),

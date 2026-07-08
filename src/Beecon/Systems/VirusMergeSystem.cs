@@ -20,22 +20,18 @@ public sealed class VirusMergeSystem : GameSystem
             Category = ShapeFilterCategory.Virus,
             Mask = ShapeFilterCategory.Virus,
         };
-
+        var overlapCallback = (Shape shape) =>
+        {
+            var other = shape.Entity;
+            if (!_consumed.Contains(other) && other.TryGet(out Virus v) && v.CanMerge)
+                _cluster.Add(other);
+        };
         foreach (var (entity, virus, body) in Entries<Virus, Body>())
         {
             if (!virus.CanMerge || _consumed.Contains(entity))
                 continue;
             _cluster.Clear();
-            world.Overlap(
-                CircleShape.Make(body.Position, MergeRadius),
-                shape =>
-                {
-                    var other = shape.Entity;
-                    if (!_consumed.Contains(other) && other.TryGet(out Virus v) && v.CanMerge)
-                        _cluster.Add(other);
-                },
-                filter
-            );
+            world.Overlap(CircleShape.Make(body.Position, MergeRadius), overlapCallback, filter);
             if (_cluster.Count < MergeCount)
                 continue;
             var centroid = Vector2.Zero;
