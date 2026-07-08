@@ -8,8 +8,6 @@ public sealed class VirusMergeSystem : GameSystem
 {
     private ValueList<Entity> _cluster = [];
     private ValueHashSet<Entity> _consumed = [];
-    public static int MergeCount => 20;
-    public static float MergeRadius => 100;
 
     public override void Update()
     {
@@ -27,11 +25,15 @@ public sealed class VirusMergeSystem : GameSystem
             if (!virus.CanMerge || _consumed.Contains(entity))
                 continue;
             _cluster.Clear();
-            world.Overlap(CircleShape.Make(body.Position, MergeRadius), overlapCallback, filter);
-            if (_cluster.Count < MergeCount)
+            world.Overlap(
+                CircleShape.Make(body.Position, Gameplay.Virus.MergeRadius),
+                overlapCallback,
+                filter
+            );
+            if (_cluster.Count < Gameplay.Virus.MergeCount)
                 continue;
             var centroid = Vector2.Zero;
-            for (var i = 0; i < MergeCount; i++)
+            for (var i = 0; i < Gameplay.Virus.MergeCount; i++)
             {
                 var member = _cluster[i];
                 _consumed.Add(member);
@@ -39,7 +41,9 @@ public sealed class VirusMergeSystem : GameSystem
                 member.Destroy();
             }
 
-            new VirusPrefab(big: true).Build(Scene.Entity().SetPosition(centroid / MergeCount));
+            new VirusPrefab(big: true).Build(
+                Scene.Entity().SetPosition(centroid / Gameplay.Virus.MergeCount)
+            );
         }
     }
 }

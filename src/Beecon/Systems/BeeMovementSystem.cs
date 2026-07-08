@@ -1,19 +1,10 @@
 using Beecon.Components;
-using Beecon.Input;
 using Beecon.Physics;
 
 namespace Beecon.Systems;
 
 public sealed class BeeMovementSystem : GameSystem
 {
-    public static float Acceleration => 8f;
-    public static float MaxSpeed => 325f;
-    public static float ArrivalRadius => 10f;
-    public static float SpreadAcceleration => Acceleration;
-    public static float SpreadMaxSpeed => MaxSpeed;
-    public static float SpreadArrivalRadius => ArrivalRadius;
-    public static float SpreadRadius => 120f;
-
     public override void Configure()
     {
         Scene.OnRemove<Player>(
@@ -37,7 +28,12 @@ public sealed class BeeMovementSystem : GameSystem
     {
         var mouseWorldPosition = Mouse.WorldPosition;
         foreach (var (_, _, body) in Entries<Bee, Body>())
-            body.Arrive(mouseWorldPosition, MaxSpeed, Acceleration, ArrivalRadius);
+            body.Arrive(
+                mouseWorldPosition,
+                Gameplay.Bee.MaxSpeed,
+                Gameplay.Bee.Acceleration,
+                Gameplay.Bee.ArrivalRadius
+            );
     }
 
     private void Spread()
@@ -56,8 +52,14 @@ public sealed class BeeMovementSystem : GameSystem
         {
             var angle = 2f * MathF.PI / count * i;
             var targetPosition =
-                playerPosition + new Vector2(MathF.Cos(angle), MathF.Sin(angle)) * SpreadRadius;
-            body.Arrive(targetPosition, SpreadMaxSpeed, SpreadAcceleration, SpreadArrivalRadius);
+                playerPosition
+                + new Vector2(MathF.Cos(angle), MathF.Sin(angle)) * Gameplay.Bee.SpreadRadius;
+            body.Arrive(
+                targetPosition,
+                Gameplay.Bee.MaxSpeed,
+                Gameplay.Bee.Acceleration,
+                Gameplay.Bee.ArrivalRadius
+            );
             i++;
         }
     }

@@ -6,12 +6,7 @@ namespace Beecon.Systems;
 
 public sealed class VirusSpawnSystem : GameSystem
 {
-    private readonly Timer _spawnTimer = new(SpawnInterval);
-    public static int MaxViruses => 50;
-    public static int SpawnCount => 5;
-    public static TimeSpan SpawnInterval => TimeSpan.FromSeconds(0.5);
-    public static float SpawnMargin => 96;
-    public static float SpawnClearanceRadius => 16;
+    private readonly Timer _spawnTimer = new(Gameplay.Virus.SpawnInterval);
 
     public override void Update()
     {
@@ -19,18 +14,18 @@ public sealed class VirusSpawnSystem : GameSystem
             return;
         var camera = Scene.Camera;
         var half = Display.Size / 2f / camera.Zoom;
-        var extentX = half.X + SpawnMargin;
-        var extentY = half.Y + SpawnMargin;
+        var extentX = half.X + Gameplay.Virus.SpawnMargin;
+        var extentY = half.Y + Gameplay.Virus.SpawnMargin;
         var filter = new ShapeFilter { Category = ShapeCategory.Virus };
         var candidate = () => camera.Target + EdgePoint(extentX, extentY);
-        for (var spawned = 0; spawned < SpawnCount; spawned++)
+        for (var spawned = 0; spawned < Gameplay.Virus.SpawnCount; spawned++)
         {
-            if (Scene.Table<Virus>().Count >= MaxViruses)
+            if (Scene.Table<Virus>().Count >= Gameplay.Virus.MaxCount)
                 return;
             if (
                 Scene.TryFindSpawnPosition(
                     candidate,
-                    SpawnClearanceRadius,
+                    Gameplay.Virus.SpawnClearanceRadius,
                     filter,
                     out var position
                 )

@@ -17,17 +17,17 @@ public struct BulletPrefab(Vector2 velocity) : IPrefab
             .SetZIndex(1200)
             .Set(new Bullet())
             .Set(body)
-            .Set(new Circle(Color.Orange) { Scale = 12 })
-            .Set(new Health(10))
+            .Set(new Circle(Color.Orange) { Scale = Gameplay.Bullet.Radius * 2f })
+            .Set(new Health(Gameplay.Bullet.Health))
             .Set(
                 new Damage(
-                    100,
-                    TimeSpan.FromMilliseconds(200),
+                    Gameplay.Bullet.Damage,
+                    Gameplay.Bullet.DamageCooldown,
                     ShapeCategory.Player | ShapeCategory.Bee
                 )
             );
 
-        var shape = CircleShape.Make(6);
+        var shape = CircleShape.Make(Gameplay.Bullet.Radius);
 
         body.CreateShape(
             new ShapeDef

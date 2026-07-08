@@ -1,4 +1,4 @@
-﻿using Beecon.Input;
+﻿using Beecon;
 using Beecon.Scenes;
 using Beecon.Systems;
 

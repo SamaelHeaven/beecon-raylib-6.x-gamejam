@@ -13,17 +13,17 @@ public struct BeePrefab : IPrefab
             .SetZIndex(1500)
             .Set(new Bee())
             .Set(body)
-            .Set(new Circle(Color.Yellow) { Scale = 20 })
-            .Set(new Health(150))
+            .Set(new Circle(Color.Yellow) { Scale = Gameplay.Bee.Radius * 2f })
+            .Set(new Health(Gameplay.Bee.Health))
             .Set(
                 new Damage(
-                    5,
-                    TimeSpan.FromMilliseconds(200),
+                    Gameplay.Bee.Damage,
+                    Gameplay.Bee.DamageCooldown,
                     ShapeCategory.Virus | ShapeCategory.BulletSensor
                 )
             );
 
-        var shape = CircleShape.Make(10);
+        var shape = CircleShape.Make(Gameplay.Bee.Radius);
         body.CreateShape(
             new ShapeDef
             {

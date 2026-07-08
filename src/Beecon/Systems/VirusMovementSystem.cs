@@ -5,9 +5,6 @@ namespace Beecon.Systems;
 
 public sealed class VirusMovementSystem : GameSystem
 {
-    public static float Acceleration => 5f;
-    public static float MaxSpeed => 75f;
-
     public override void FixedUpdate()
     {
         var player = Scene.Player;
@@ -17,7 +14,7 @@ public sealed class VirusMovementSystem : GameSystem
         foreach (var (_, _, body) in Entries<Virus, Body>())
         {
             var direction = (playerPosition - body.Position).Normalize();
-            body.Seek(direction * MaxSpeed, Acceleration);
+            body.Seek(direction * Gameplay.Virus.MaxSpeed, Gameplay.Virus.Acceleration);
         }
     }
 }

@@ -4,13 +4,11 @@ namespace Beecon.Systems;
 
 public sealed class BulletDespawnSystem : GameSystem
 {
-    public static float Margin => 64f;
-
     public override void Update()
     {
         var camera = Scene.Camera;
         var target = camera.Target;
-        var half = Display.Size / 2f / camera.Zoom + Margin;
+        var half = Display.Size / 2f / camera.Zoom + Gameplay.Bullet.DespawnMargin;
         foreach (var (entity, _, body) in Entries<Bullet, Body>())
         {
             var offset = body.Position - target;

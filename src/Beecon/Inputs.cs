@@ -1,4 +1,4 @@
-﻿namespace Beecon.Input;
+﻿namespace Beecon;
 
 public static class Inputs
 {

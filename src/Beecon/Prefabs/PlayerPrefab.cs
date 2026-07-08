@@ -14,15 +14,21 @@ public struct PlayerPrefab : IPrefab
             .SetZIndex(1000)
             .Set(new Player())
             .Set(body)
-            .Set(new Circle(Color.Gold) { Scale = 50 })
-            .Set(new Health(1_000))
-            .Set(new Damage(50, TimeSpan.FromMilliseconds(200), ShapeCategory.BulletSensor))
+            .Set(new Circle(Color.Gold) { Scale = Gameplay.Player.Radius * 2f })
+            .Set(new Health(Gameplay.Player.Health))
+            .Set(
+                new Damage(
+                    Gameplay.Player.Damage,
+                    Gameplay.Player.DamageCooldown,
+                    ShapeCategory.BulletSensor
+                )
+            )
             .Scope(scene =>
             {
                 scene.Entity().SetZIndex(1).SetPosition(new Vector2(0, 40)).Set(new HealthBar());
             });
 
-        var shape = CircleShape.Make(25);
+        var shape = CircleShape.Make(Gameplay.Player.Radius);
         body.CreateShape(
             new ShapeDef { Filter = new ShapeFilter { Category = ShapeCategory.Player } },
             shape

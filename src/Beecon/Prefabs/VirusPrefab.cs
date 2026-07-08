@@ -11,9 +11,9 @@ public struct VirusPrefab(bool big = false) : IPrefab
     {
         var body = entity.Scene.World.CreateBody(new BodyDef { Type = BodyType.Dynamic });
 
-        var radius = Big ? 100f : 14f;
-        var health = Big ? 250f : 50f;
-        var damage = Big ? 40f : 15f;
+        var radius = Big ? Gameplay.Virus.BigRadius : Gameplay.Virus.Radius;
+        var health = Big ? Gameplay.Virus.BigHealth : Gameplay.Virus.Health;
+        var damage = Big ? Gameplay.Virus.BigDamage : Gameplay.Virus.Damage;
         var color = Big ? Color.DarkGreen : Color.Green;
 
         entity
@@ -25,7 +25,7 @@ public struct VirusPrefab(bool big = false) : IPrefab
             .Set(
                 new Damage(
                     damage,
-                    TimeSpan.FromMilliseconds(200),
+                    Gameplay.Virus.DamageCooldown,
                     ShapeCategory.Player | ShapeCategory.Bee
                 )
             );

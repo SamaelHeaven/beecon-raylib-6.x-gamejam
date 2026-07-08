@@ -2,7 +2,7 @@
 
 public sealed class Player
 {
-    public int MaxBees { get; set; } = 5;
+    public int MaxBees { get; set; } = Gameplay.Player.InitialMaxBees;
 }
 
 public static class ScenePlayerExtensions

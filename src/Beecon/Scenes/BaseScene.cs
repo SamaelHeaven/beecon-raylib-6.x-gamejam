@@ -1,6 +1,4 @@
-﻿using Beecon.Input;
-
-namespace Beecon.Scenes;
+﻿namespace Beecon.Scenes;
 
 public abstract class BaseScene : GameSystem
 {

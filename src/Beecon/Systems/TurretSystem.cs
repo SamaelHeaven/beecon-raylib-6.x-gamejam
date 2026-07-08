@@ -5,8 +5,6 @@ namespace Beecon.Systems;
 
 public sealed class TurretSystem : GameSystem
 {
-    public static float BulletSpeed => 450f;
-
     public override void Update()
     {
         var player = Scene.Player;
@@ -19,7 +17,9 @@ public sealed class TurretSystem : GameSystem
                 continue;
             var origin = entity.WorldPosition;
             var direction = (playerPosition - origin).Normalize();
-            new BulletPrefab(direction * BulletSpeed).Build(Scene.Entity().SetPosition(origin));
+            new BulletPrefab(direction * Gameplay.Bullet.Speed).Build(
+                Scene.Entity().SetPosition(origin)
+            );
         }
     }
 }

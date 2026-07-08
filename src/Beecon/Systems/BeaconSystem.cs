@@ -1,28 +1,24 @@
 using Beecon.Components;
 using Beecon.Physics;
 using Beecon.Prefabs;
-using Beecon.Scenes;
 
 namespace Beecon.Systems;
 
 public sealed class BeaconSystem : GameSystem
 {
-    public static int BeaconCount => 120;
-    public static int MaxBeesBonus => 2;
-
     public override void Initialize()
     {
-        var bound = GameScene.MapSize / 2f - BeaconPrefab.Radius - GameScene.WallThickness;
+        var bound = Gameplay.Map.Size / 2f - Gameplay.Beacon.Radius - Gameplay.Map.WallThickness;
         var filter = new ShapeFilter { Category = ShapeCategory.Beacon };
         var candidate = () => RandomInBounds(bound);
-        for (var i = 0; i < BeaconCount; i++)
+        for (var i = 0; i < Gameplay.Beacon.Count; i++)
             if (
                 Scene.TryFindSpawnPosition(
                     candidate,
-                    BeaconPrefab.Radius * 2f,
+                    Gameplay.Beacon.Radius * 2f,
                     filter,
                     out var position,
-                    32
+                    Gameplay.Beacon.SpawnMaxAttempts
                 )
             )
                 new BeaconPrefab().Build(Scene.Entity().SetPosition(position));
@@ -48,7 +44,7 @@ public sealed class BeaconSystem : GameSystem
             if (!completed)
                 continue;
             beacon.Activated = true;
-            player.Get<Player>().MaxBees += MaxBeesBonus;
+            player.Get<Player>().MaxBees += Gameplay.Beacon.MaxBeesBonus;
         }
     }
 

@@ -6,10 +6,7 @@ namespace Beecon.Systems;
 
 public sealed class BeeSpawnSystem : GameSystem
 {
-    private readonly Timer _spawnTimer = new(SpawnInterval);
-    public static TimeSpan SpawnInterval => TimeSpan.FromSeconds(0.2);
-    public static float SpawnRadius => 60;
-    public static float SpawnClearanceRadius => 12;
+    private readonly Timer _spawnTimer = new(Gameplay.Bee.SpawnInterval);
 
     public override void Update()
     {
@@ -24,8 +21,8 @@ public sealed class BeeSpawnSystem : GameSystem
         var filter = new ShapeFilter { Category = ShapeCategory.Bee };
         if (
             Scene.TryFindSpawnPosition(
-                () => playerPosition + RandomInCircle(SpawnRadius),
-                SpawnClearanceRadius,
+                () => playerPosition + RandomInCircle(Gameplay.Bee.SpawnRadius),
+                Gameplay.Bee.SpawnClearanceRadius,
                 filter,
                 out var position
             )
