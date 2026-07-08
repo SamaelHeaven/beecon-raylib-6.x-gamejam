@@ -97,7 +97,7 @@ public static class Gameplay
 
     public static class Beacon
     {
-        public static int Count => 120;
+        public static int Count => 150;
         public static int Sides => 6;
         public static float Radius => 150f;
         public static TimeSpan ChargeDuration => TimeSpan.FromSeconds(3);

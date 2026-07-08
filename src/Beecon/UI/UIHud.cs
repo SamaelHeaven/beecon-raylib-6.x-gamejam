@@ -4,7 +4,10 @@ public class UIHud : UIContainer
 {
     public UIHud()
     {
-        Size = Vigilance.Core.Display.Size;
-        Add(new UIExperienceBar());
+        Add(
+            new UIContainer { Size = Vigilance.Core.Display.Size, Justify = Justify.SpaceBetween }[
+                new UIExperienceBar()
+            ]
+        );
     }
 }

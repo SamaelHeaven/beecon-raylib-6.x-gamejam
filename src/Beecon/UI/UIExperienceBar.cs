@@ -9,20 +9,32 @@ public class UIExperienceBar : UIContainer
 
     public UIExperienceBar()
     {
-        Position = PositionType.Absolute;
-        Left = Unit.Zero;
-        Right = Unit.Zero;
-        Bottom = Unit.Fixed(24f);
-        Direction = Direction.TopToBottom;
-        AlignItems = Align.Center;
-        GapY = Unit.Fixed(4f);
-
+        Width = Unit.Full;
         Add(
-            new UIText("Lv. 1", Color.White) { FontSize = 20f }.Tap(out _level),
-            new UIRectangle(Color.DarkGray) { Width = 400f, Height = 16f }[
-                new UIRectangle(Color.SkyBlue) { Height = Unit.Full, Width = Unit.Zero }.Tap(
-                    out _fill
-                )
+            new UIContainer { Width = Unit.Full, Padding = 4 }[
+                new UIRectangle(Color.DarkGray)
+                {
+                    Width = Unit.Full,
+                    Padding = 6,
+                    Radius = 4,
+                    Stroke = Color.Gray,
+                    StrokeWidth = 2,
+                }[
+                    new UIContainer
+                    {
+                        Width = Unit.Full,
+                        Direction = Direction.LeftToRight,
+                        Justify = Justify.SpaceBetween,
+                    }[
+                        new UIRectangle(Color.SkyBlue)
+                        {
+                            Position = PositionType.Absolute,
+                            Height = Unit.Full,
+                        }.Tap(out _fill),
+                        new UIContainer(),
+                        new UIText(Color.White) { FontSize = 20f }.Tap(out _level)
+                    ]
+                ]
             ]
         );
     }
@@ -34,6 +46,6 @@ public class UIExperienceBar : UIContainer
             return;
         var state = player.Get<Player>();
         _fill.Width = Unit.Percent(state.ExperiencePercent);
-        _level.Value = $"Lv. {state.Level}";
+        _level.Value = $"Lv {state.Level}";
     }
 }
