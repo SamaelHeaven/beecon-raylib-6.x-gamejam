@@ -13,6 +13,8 @@ public static class SceneExtensions
         public Stats? Stats =>
             scene.Components<Player>().AsValueEnumerable().FirstOrDefault()?.Stats;
 
+        public Swarm? Swarm => scene.Components<Swarm>().AsValueEnumerable().FirstOrDefault();
+
         public UIHud Hud => scene.Components<UIHud>().AsValueEnumerable().First();
 
         public bool TryGetSingleton<T>([MaybeNullWhen(false)] out T singleton)

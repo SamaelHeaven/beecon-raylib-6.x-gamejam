@@ -51,10 +51,13 @@ public static class Gameplay
         public static TimeSpan DamageCooldown => TimeSpan.FromMilliseconds(200);
         public static float Acceleration => 5f;
         public static float MaxSpeed => 75f;
-        public static int MaxCount => 50;
-        public static int SpawnCount => 5;
         public static TimeSpan SpawnInterval => TimeSpan.FromSeconds(0.5);
         public static float SpawnMargin => 96f;
+        public static int BaseSpawnCount => 1;
+        public static float SpawnCountPerMinute => 1f;
+        public static int BaseMaxCount => 12;
+        public static float MaxCountPerMinute => 14f;
+        public static int AbsoluteMaxCount => 220;
         public static float SpawnClearanceRadius => Radius;
         public static float DespawnDistance => 1_600f;
         public static float MergeGrowth => 4f;
@@ -69,6 +72,29 @@ public static class Gameplay
         public static float BarrierWidth => ShieldRadius * 2.4f;
         public static float BarrierOffset => ShieldRadius + BarrierThickness * 1.5f;
         public static float BarrierDensity => 1_000f;
+
+        public static int SpawnCountAt(TimeSpan elapsed, bool swarm)
+        {
+            var count = BaseSpawnCount + SpawnCountPerMinute * (float)elapsed.TotalMinutes;
+            if (swarm)
+                count *= Swarm.SpawnMultiplier;
+            return Math.Max(1, (int)count);
+        }
+
+        public static int MaxCountAt(TimeSpan elapsed, bool swarm)
+        {
+            var max = BaseMaxCount + MaxCountPerMinute * (float)elapsed.TotalMinutes;
+            if (swarm)
+                max *= Swarm.SpawnMultiplier;
+            return Math.Min(AbsoluteMaxCount, (int)max);
+        }
+    }
+
+    public static class Swarm
+    {
+        public static TimeSpan Interval => TimeSpan.FromMinutes(2);
+        public static TimeSpan Duration => TimeSpan.FromSeconds(30);
+        public static float SpawnMultiplier => 4f;
     }
 
     public static class Turret

@@ -27,6 +27,7 @@ public struct ExperiencePrefab(float amount, ExperienceType type) : IPrefab
 
         entity
             .SetZIndex(Visuals.Experience.ZIndex)
+            .SetRotation(Random.Shared.Next(0, 360))
             .Set(new Experience(Amount))
             .Set(body)
             .Set(
@@ -36,7 +37,6 @@ public struct ExperiencePrefab(float amount, ExperienceType type) : IPrefab
                     {
                         Source = Visuals.Experience.TextureAtlas.GetRegion((int)Type),
                         Scale = Visuals.Experience.Size,
-                        Rotation = Random.Shared.Next(0, 360),
                     }
                 )
             );

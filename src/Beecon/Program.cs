@@ -43,6 +43,7 @@ var config = Config
             new BeeMovementSystem(),
             new BeeSpawnSystem(),
             new BeaconSystem(),
+            new SwarmSystem(),
             new VirusMovementSystem(),
             new VirusSpawnSystem(),
             new VirusDespawnSystem(),

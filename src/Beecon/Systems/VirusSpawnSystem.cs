@@ -1,6 +1,7 @@
 using Beecon.Components;
 using Beecon.Physics;
 using Beecon.Prefabs;
+using Beecon.Scenes;
 
 namespace Beecon.Systems;
 
@@ -12,15 +13,20 @@ public sealed class VirusSpawnSystem : GameSystem
     {
         if (!_spawnTimer.Update())
             return;
+        var swarm = Scene.Swarm;
+        var elapsed = swarm?.Elapsed ?? TimeSpan.Zero;
+        var isSwarm = swarm?.IsActive ?? false;
+        var spawnCount = Gameplay.Virus.SpawnCountAt(elapsed, isSwarm);
+        var maxCount = Gameplay.Virus.MaxCountAt(elapsed, isSwarm);
         var camera = Scene.Camera;
         var half = Display.Size / 2f / camera.Zoom;
         var extentX = half.X + Gameplay.Virus.SpawnMargin;
         var extentY = half.Y + Gameplay.Virus.SpawnMargin;
         var filter = new ShapeFilter { Category = ShapeCategory.Virus };
         var candidate = () => camera.Target + EdgePoint(extentX, extentY);
-        for (var spawned = 0; spawned < Gameplay.Virus.SpawnCount; spawned++)
+        for (var spawned = 0; spawned < spawnCount; spawned++)
         {
-            if (Scene.Count<Virus>() >= Gameplay.Virus.MaxCount)
+            if (Scene.Count<Virus>() >= maxCount)
                 return;
             if (
                 Scene.TryFindSpawnPosition(

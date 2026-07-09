@@ -6,6 +6,7 @@ public class UIHud : UIContainer
 
     public UIHud()
     {
+        Culling = false;
         Add(
             new UIContainer
             {
@@ -13,7 +14,15 @@ public class UIHud : UIContainer
                 Direction = Direction.TopToBottom,
                 Justify = Justify.SpaceBetween,
                 AlignItems = Align.Start,
-            }[new UIExperienceBar(), new UIStatMenu().Tap(out StatMenu)]
+            }[
+                new UIContainer
+                {
+                    Width = Unit.Full,
+                    Direction = Direction.TopToBottom,
+                    AlignItems = Align.Center,
+                }[new UIExperienceBar(), new UITimer()],
+                new UIStatMenu().Tap(out StatMenu)
+            ]
         );
     }
 }
