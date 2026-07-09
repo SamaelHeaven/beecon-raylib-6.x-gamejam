@@ -21,6 +21,10 @@ var config = Config
     {
         drawing.DefaultCulling = true;
     })
+    .Font(font =>
+    {
+        font.Default = () => Font.Resource("Font.default.woff");
+    })
     .World(world =>
     {
         world.DefaultGravity = Vector2.Zero;
@@ -47,6 +51,7 @@ var config = Config
             new DamageSystem(),
             new ExperienceSystem(),
             new ExperienceDropSystem(),
+            new StatSystem(),
             new HealthSystem(),
         ]
     )

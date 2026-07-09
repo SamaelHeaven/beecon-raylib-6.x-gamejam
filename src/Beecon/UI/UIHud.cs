@@ -5,9 +5,13 @@ public class UIHud : UIContainer
     public UIHud()
     {
         Add(
-            new UIContainer { Size = Vigilance.Core.Display.Size, Justify = Justify.SpaceBetween }[
-                new UIExperienceBar()
-            ]
+            new UIContainer
+            {
+                Size = Vigilance.Core.Display.Size,
+                Direction = Direction.TopToBottom,
+                Justify = Justify.SpaceBetween,
+                AlignItems = Align.Start,
+            }[new UIExperienceBar(), new UIStatMenu()]
         );
     }
 }

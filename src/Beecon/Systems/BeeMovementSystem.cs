@@ -5,6 +5,15 @@ namespace Beecon.Systems;
 
 public sealed class BeeMovementSystem : GameSystem
 {
+    private float BeeSpeed
+    {
+        get
+        {
+            var player = Scene.Player;
+            return player.IsNull ? Gameplay.Bee.MaxSpeed : player.Get<Player>().Stats.BeeSpeed;
+        }
+    }
+
     public override void Configure()
     {
         Scene.OnRemove<Player>(
@@ -27,11 +36,12 @@ public sealed class BeeMovementSystem : GameSystem
 
     private void FollowMouse()
     {
+        var beeSpeed = BeeSpeed;
         var mouseWorldPosition = Mouse.WorldPosition;
         foreach (var (_, _, body) in Entries<Bee, Body>())
             body.Arrive(
                 mouseWorldPosition,
-                Gameplay.Bee.MaxSpeed,
+                beeSpeed,
                 Gameplay.Bee.Acceleration,
                 Gameplay.Bee.ArrivalRadius
             );
@@ -56,6 +66,7 @@ public sealed class BeeMovementSystem : GameSystem
         if (player.IsNull)
             return;
         var playerPosition = player.Position;
+        var beeSpeed = player.Get<Player>().Stats.BeeSpeed;
         var count = Scene.Count<Bee>();
         var i = 0;
         foreach (
@@ -68,7 +79,7 @@ public sealed class BeeMovementSystem : GameSystem
                 playerPosition + HexagonSpreadOffset((float)i / count, Gameplay.Bee.SpreadRadius);
             body.Arrive(
                 targetPosition,
-                Gameplay.Bee.MaxSpeed,
+                beeSpeed,
                 Gameplay.Bee.Acceleration,
                 Gameplay.Bee.ArrivalRadius
             );

@@ -98,6 +98,43 @@ public static class Gameplay
         }
     }
 
+    public static class Stats
+    {
+        public static int MaxLevel => 8;
+
+        public static float PlayerSpeed(int level)
+        {
+            return Player.MaxSpeed + 25f * level;
+        }
+
+        public static float BeeSpeed(int level)
+        {
+            return Bee.MaxSpeed + 25f * level;
+        }
+
+        public static float BeeDamage(int level)
+        {
+            return Bee.Damage + 2f * level;
+        }
+
+        public static TimeSpan BeeReload(int level)
+        {
+            return TimeSpan.FromSeconds(
+                (Bee.SpawnInterval.TotalSeconds * MathF.Pow(0.85f, level)).Max(0.05)
+            );
+        }
+
+        public static float PlayerHealth(int level)
+        {
+            return Player.Health + 250f * level;
+        }
+
+        public static float HealthRegen(int level)
+        {
+            return 5f * level;
+        }
+    }
+
     public static class Beacon
     {
         public static int Count => 150;

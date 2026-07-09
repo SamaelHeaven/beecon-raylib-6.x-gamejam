@@ -16,7 +16,7 @@ public sealed class PlayerMovementSystem : GameSystem
 
     public override void FixedUpdate()
     {
-        foreach (var (_, _, body) in Entries<Player, Body>())
-            body.Seek(_movement * Gameplay.Player.MaxSpeed, Gameplay.Player.Acceleration);
+        foreach (var (_, player, body) in Entries<Player, Body>())
+            body.Seek(_movement * player.Stats.PlayerSpeed, Gameplay.Player.Acceleration);
     }
 }

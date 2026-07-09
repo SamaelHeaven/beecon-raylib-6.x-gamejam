@@ -28,7 +28,7 @@ public static class Visuals
     {
         public static int ZIndex => 1_500;
         public static float Size => 32f;
-        public static TimeSpan AnimationDelay => TimeSpan.FromMilliseconds(75);
+        public static TimeSpan AnimationDelay => TimeSpan.FromMilliseconds(100);
         public static Texture Texture => field ??= Texture.Resource("Texture.bee.png");
         public static TextureAtlas TextureAtlas => field ??= new TextureAtlas(Texture, 1, 4);
     }

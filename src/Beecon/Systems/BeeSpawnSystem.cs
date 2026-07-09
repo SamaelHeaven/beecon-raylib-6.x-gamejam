@@ -10,12 +10,14 @@ public sealed class BeeSpawnSystem : GameSystem
 
     public override void Update()
     {
-        if (!_spawnTimer.Update())
-            return;
         var player = Scene.Player;
         if (player.IsNull)
             return;
-        if (Scene.Count<Bee>() >= player.Get<Player>().MaxBees)
+        var state = player.Get<Player>();
+        _spawnTimer.Duration = state.Stats.BeeReload;
+        if (!_spawnTimer.Update())
+            return;
+        if (Scene.Count<Bee>() >= state.MaxBees)
             return;
         var playerPosition = player.Position;
         var filter = new ShapeFilter { Category = ShapeCategory.Bee };

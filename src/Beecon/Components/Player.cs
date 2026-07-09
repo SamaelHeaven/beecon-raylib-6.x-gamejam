@@ -6,6 +6,8 @@ public sealed class Player
 
     public int Level { get; set; } = 1;
 
+    public Stats Stats { get; } = new();
+
     public float Experience { get; set; }
 
     public float RequiredExperience => Gameplay.Experience.RequiredForLevel(Level);
@@ -20,6 +22,7 @@ public sealed class Player
         {
             Experience -= RequiredExperience;
             Level++;
+            Stats.GrantPoint();
         }
     }
 }
