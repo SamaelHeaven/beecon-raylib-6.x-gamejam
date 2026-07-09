@@ -37,7 +37,7 @@ var config = Config
             new DrawableSystem(),
             new SpriteBatchSystem(),
             new UISystem(),
-            new AnimationSystem { Order = 1 },
+            new AnimationSystem(),
             new PhysicsSystem { Order = 1 },
             new PlayerMovementSystem(),
             new CameraSystem(),

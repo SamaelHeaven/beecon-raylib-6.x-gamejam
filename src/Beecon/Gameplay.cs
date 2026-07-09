@@ -40,7 +40,7 @@ public static class Gameplay
 
     public static class Virus
     {
-        public static float Radius => 12f;
+        public static float Radius => 10f;
         public static float Health => 50f;
         public static float Damage => 15f;
         public static float TurretRadius => 30f;
@@ -72,7 +72,7 @@ public static class Gameplay
         public static float BarrierThickness => 10f;
         public static float BarrierWidth => ShieldRadius * 2.4f;
         public static float BarrierOffset => ShieldRadius + BarrierThickness * 1.5f;
-        public static float BarrierDensity => 10_000f;
+        public static float BarrierDensity => 1_000f;
 
         public static int SpawnCountAt(TimeSpan elapsed, bool swarm)
         {

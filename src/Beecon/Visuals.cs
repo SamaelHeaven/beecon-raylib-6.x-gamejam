@@ -56,9 +56,7 @@ public static class Visuals
         public static Color Tint => Color.White;
         public static Color TurretTint => "#B9F8CF";
         public static Color ShieldTint => "#96F7E4";
-        public static float SizeScale => 3f;
-        public static int BarrierZIndex => 1;
-        public static Color BarrierColor => Color.SkyBlue;
+        public static float SizeScale => 3.5f;
         public static TimeSpan AnimationDelay => TimeSpan.FromMilliseconds(75);
         public static Texture Texture => field ??= Texture.Resource("Texture.virus.png");
         public static TextureAtlas TextureAtlas => field ??= new TextureAtlas(Texture, 4, 1);
