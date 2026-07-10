@@ -45,6 +45,7 @@ var config = Config
             new BeeMovementSystem(),
             new BeeSpawnSystem(),
             new BeaconSystem(),
+            new MatrixRainSystem(),
             new SwarmSystem(),
             new VirusMovementSystem(),
             new VirusSpawnSystem(),

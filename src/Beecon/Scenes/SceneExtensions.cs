@@ -15,6 +15,9 @@ public static class SceneExtensions
 
         public Swarm? Swarm => scene.Components<Swarm>().AsValueEnumerable().FirstOrDefault();
 
+        public MatrixRain? MatrixRain =>
+            scene.Components<MatrixRain>().AsValueEnumerable().FirstOrDefault();
+
         public UIHud Hud => scene.Components<UIHud>().AsValueEnumerable().First();
 
         public bool TryGetSingleton<T>([MaybeNullWhen(false)] out T singleton)

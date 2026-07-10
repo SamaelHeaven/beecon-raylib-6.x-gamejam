@@ -95,18 +95,26 @@ public static class Visuals
     {
         public static int ZIndex => 100;
         public static float Size => Gameplay.Beacon.Radius * 2f;
-        public static Color DeactivatedColor => Color.DarkGray;
-        public static Color ChargingColor => Color.SkyBlue;
-        public static Color ActivatedColor => Color.Orange;
+        public static int ShadowBlur => 5;
+        public static float ShadowPadding => 1 + ShadowBlur * 3;
+        public static float BakedSize => Size + 2 * ShadowPadding;
+    }
+
+    public static class Matrix
+    {
+        public static int Resolution => 256 * 2;
+        public static float CellSize => 64f;
+        public static int Trail => 6;
+        public static TimeSpan StepInterval => TimeSpan.FromMilliseconds(70);
+        public static Color BackgroundColor => "#192E03";
+        public static Color Text => "#7CCF35";
+        public static Color Head => "#F7FEE7";
     }
 
     public static class Experience
     {
         public static int ZIndex => 1_100;
         public static float Size => 16f;
-        public static Color Color => Color.SkyBlue;
-        public static Color TurretColor => Color.Violet;
-        public static Color ShieldColor => Color.Blue;
         public static Texture Texture => field ??= Texture.Resource("Texture.experience.png");
         public static TextureAtlas TextureAtlas => field ??= new TextureAtlas(Texture, 3, 1);
     }

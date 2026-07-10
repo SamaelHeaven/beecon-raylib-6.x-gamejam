@@ -1,5 +1,6 @@
 using Beecon.Components;
 using Beecon.Physics;
+using Beecon.UI;
 
 namespace Beecon.Prefabs;
 
@@ -9,16 +10,7 @@ public struct BeaconPrefab : IPrefab
     {
         var body = entity.Scene.World.CreateBody(new BodyDef { Type = BodyType.Static });
 
-        entity
-            .SetZIndex(Visuals.Beacon.ZIndex)
-            .Set(new Beacon())
-            .Set(body)
-            .Set(
-                new RegularPolygon(Gameplay.Beacon.Sides, Visuals.Beacon.DeactivatedColor)
-                {
-                    Scale = Visuals.Beacon.Size,
-                }
-            );
+        entity.SetZIndex(Visuals.Beacon.ZIndex).Set(new Beacon()).Set(body).Set(new UIBeacon());
 
         body.CreateShape(
             new ShapeDef

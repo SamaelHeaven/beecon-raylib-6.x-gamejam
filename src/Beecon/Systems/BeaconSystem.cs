@@ -31,11 +31,10 @@ public sealed class BeaconSystem : GameSystem
         if (player.IsNull)
             return;
         var playerPosition = player.Position;
-        foreach (var (entity, beacon, body) in Entries<Beacon, Body>())
+        foreach (var (_, beacon, body) in Entries<Beacon, Body>())
         {
             if (beacon.Activated)
                 continue;
-
             var timer = beacon.ChargeTimer;
             if (IsInside(body, playerPosition))
             {
@@ -49,14 +48,6 @@ public sealed class BeaconSystem : GameSystem
             {
                 Discharge(timer);
             }
-
-            entity.Get<RegularPolygon>().Fill = beacon.Activated
-                ? Visuals.Beacon.ActivatedColor
-                : Color.Lerp(
-                    Visuals.Beacon.DeactivatedColor,
-                    Visuals.Beacon.ChargingColor,
-                    beacon.Progress
-                );
         }
     }
 
