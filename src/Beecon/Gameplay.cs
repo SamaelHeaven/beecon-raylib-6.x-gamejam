@@ -127,7 +127,7 @@ public static class Gameplay
         public static float Damage => 70f;
         public static TimeSpan DamageCooldown => TimeSpan.FromMilliseconds(200);
         public static float Speed => 450f;
-        public static float DespawnMargin => 1000f;
+        public static float DespawnMargin => Virus.DespawnDistance;
     }
 
     public static class Experience
