@@ -43,17 +43,18 @@ public static class Gameplay
         public static float Radius => 10f;
         public static float Health => 50f;
         public static float Damage => 15f;
+        public static float HealthPerMerge => 40f;
+        public static float DamagePerMerge => 8f;
         public static float TurretRadius => 30f;
-        public static float TurretHealth => 250f;
-        public static float TurretDamage => 40f;
         public static float ShieldRadius => 50f;
-        public static float ShieldHealth => 500f;
-        public static float ShieldDamage => 60f;
         public static TimeSpan DamageCooldown => TimeSpan.FromMilliseconds(200);
         public static float Acceleration => 5f;
         public static float MaxSpeed => 75f;
+        public static float TurretMaxSpeed => 95f;
+        public static float ShieldMaxSpeed => 120f;
         public static TimeSpan SpawnInterval => TimeSpan.FromSeconds(0.5);
         public static float SpawnMargin => 96f;
+        public static float SpawnBias => 2.5f;
         public static int BaseSpawnCount => 1;
         public static float SpawnCountPerMinute => 1f;
         public static int BaseMaxCount => 12;
@@ -163,6 +164,14 @@ public static class Gameplay
         {
             return 5f * level;
         }
+    }
+
+    public static class PowerUp
+    {
+        public static float DropChance => 0.005f;
+        public static float Radius => 12f;
+        public static TimeSpan MagnetDuration => TimeSpan.FromSeconds(3.5);
+        public static float NukeDamage => 500f;
     }
 
     public static class Beacon

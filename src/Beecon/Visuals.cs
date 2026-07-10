@@ -119,6 +119,15 @@ public static class Visuals
         public static TextureAtlas TextureAtlas => field ??= new TextureAtlas(Texture, 3, 1);
     }
 
+    public static class PowerUp
+    {
+        public static int ZIndex => 1_150;
+        public static float Size => 28f;
+        public static Color HealthColor => "#4ADE80";
+        public static Color MagnetColor => "#60A5FA";
+        public static Color NukeColor => "#F87171";
+    }
+
     public static class Hud
     {
         public static int ZIndex => 10_000;

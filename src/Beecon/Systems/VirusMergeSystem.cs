@@ -69,6 +69,7 @@ public sealed class VirusMergeSystem : GameSystem
         var position = (a.Get<Body>().Position + b.Get<Body>().Position) / 2f;
         var type = va.Type;
         var mergeCount = Math.Max(va.MergeCount, vb.MergeCount) + 1;
+        var strength = Math.Max(va.Strength, vb.Strength) + 1;
         if (mergeCount >= MergesPerPromotionFor(va.Type))
         {
             type = va.NextType();
@@ -77,7 +78,7 @@ public sealed class VirusMergeSystem : GameSystem
 
         a.Destroy();
         b.Destroy();
-        new VirusPrefab(type, mergeCount).Build(Scene.Entity().SetPosition(position));
+        new VirusPrefab(type, mergeCount, strength).Build(Scene.Entity().SetPosition(position));
     }
 
     private static bool CanMerge(Virus a, Virus b)

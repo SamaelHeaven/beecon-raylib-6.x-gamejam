@@ -8,6 +8,15 @@ public sealed class Player
 
     public Stats Stats { get; } = new();
 
+    public TimeSpan MagnetRemaining { get; set; }
+
+    public bool MagnetActive => MagnetRemaining > TimeSpan.Zero;
+
+    public void ActivateMagnet()
+    {
+        MagnetRemaining = Gameplay.PowerUp.MagnetDuration;
+    }
+
     public float Experience { get; set; }
 
     public float RequiredExperience => Gameplay.Experience.RequiredForLevel(Level);

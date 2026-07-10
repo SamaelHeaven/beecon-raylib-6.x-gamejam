@@ -26,4 +26,5 @@ public static class ShapeCategory
     public static ShapeFilterCategory BulletSensor { get; } = Category;
     public static ShapeFilterCategory Beacon { get; } = Category;
     public static ShapeFilterCategory Experience { get; } = Category;
+    public static ShapeFilterCategory PowerUp { get; } = Category;
 }

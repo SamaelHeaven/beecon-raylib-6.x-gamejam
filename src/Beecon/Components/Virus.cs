@@ -13,6 +13,8 @@ public sealed class Virus
 
     public int MergeCount { get; set; }
 
+    public int Strength { get; set; }
+
     public bool CanMerge => Type != Progression[^1];
 
     public VirusType NextType()

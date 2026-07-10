@@ -12,11 +12,11 @@ public sealed class VirusMovementSystem : GameSystem
         if (player.IsNull)
             return;
         var playerPosition = player.Position;
-        foreach (var (entity, _, body) in Entries<Virus, Body>())
+        foreach (var (entity, virus, body) in Entries<Virus, Body>())
         {
             var offset = playerPosition - body.Position;
             var direction = offset.Normalize();
-            body.Seek(direction * Gameplay.Virus.MaxSpeed, Gameplay.Virus.Acceleration);
+            body.Seek(direction * SpeedOf(virus.Type), Gameplay.Virus.Acceleration);
             if (direction == Vector2.Zero)
                 continue;
             body.Rotation = MathF.Atan2(direction.Y, direction.X) * (180f / MathF.PI);
@@ -25,5 +25,15 @@ public sealed class VirusMovementSystem : GameSystem
             var visual = shield.Visual;
             visual.Position = direction * Gameplay.Virus.BarrierOffset;
         }
+    }
+
+    private static float SpeedOf(VirusType type)
+    {
+        return type switch
+        {
+            VirusType.Shield => Gameplay.Virus.ShieldMaxSpeed,
+            VirusType.Turret => Gameplay.Virus.TurretMaxSpeed,
+            _ => Gameplay.Virus.MaxSpeed,
+        };
     }
 }

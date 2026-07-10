@@ -18,4 +18,9 @@ public sealed class Health
     {
         Current -= amount;
     }
+
+    public void Restore()
+    {
+        Current = Max;
+    }
 }

@@ -57,9 +57,11 @@ var config = Config
             new ExperienceSystem(),
             new ExperienceMagnetSystem(),
             new ExperienceDropSystem(),
+            new PowerUpSystem(),
             new StatSystem(),
             new HealthSystem(),
             new PlayerDamageFlashSystem(),
+            new MusicSystem(),
         ]
     )
     .Build();

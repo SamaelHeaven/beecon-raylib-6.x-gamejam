@@ -23,7 +23,8 @@ public sealed class VirusSpawnSystem : GameSystem
         var extentX = half.X + Gameplay.Virus.SpawnMargin;
         var extentY = half.Y + Gameplay.Virus.SpawnMargin;
         var filter = new ShapeFilter { Category = ShapeCategory.Virus };
-        var candidate = () => camera.Target + EdgePoint(extentX, extentY);
+        var heading = PlayerHeading();
+        var candidate = () => camera.Target + EdgePoint(extentX, extentY, heading);
         for (var spawned = 0; spawned < spawnCount; spawned++)
         {
             if (Scene.Count<Virus>() >= maxCount)
@@ -40,17 +41,33 @@ public sealed class VirusSpawnSystem : GameSystem
         }
     }
 
-    private static Vector2 EdgePoint(float extentX, float extentY)
+    private Vector2? PlayerHeading()
+    {
+        var player = Scene.Player;
+        if (player.IsNull)
+            return null;
+        var velocity = player.Get<Body>().LinearVelocity;
+        return velocity.Length() > 10f ? velocity.Normalize() : null;
+    }
+
+    private static Vector2 EdgePoint(float extentX, float extentY, Vector2? heading)
     {
         var rnd = Random.Shared;
-        var x = (rnd.NextSingle() * 2f - 1f) * extentX;
-        var y = (rnd.NextSingle() * 2f - 1f) * extentY;
-        return rnd.Next(4) switch
+        float angle;
+        if (heading is { } direction)
         {
-            0 => new Vector2(x, -extentY),
-            1 => new Vector2(x, extentY),
-            2 => new Vector2(-extentX, y),
-            _ => new Vector2(extentX, y),
-        };
+            var sign = rnd.Next(2) == 0 ? 1f : -1f;
+            var offset = MathF.Pow(rnd.NextSingle(), Gameplay.Virus.SpawnBias) * MathF.PI;
+            angle = MathF.Atan2(direction.Y, direction.X) + sign * offset;
+        }
+        else
+        {
+            angle = (rnd.NextSingle() * 2f - 1f) * MathF.PI;
+        }
+
+        var ray = new Vector2(MathF.Cos(angle), MathF.Sin(angle));
+        var tx = MathF.Abs(ray.X) < 1e-5f ? float.PositiveInfinity : extentX / MathF.Abs(ray.X);
+        var ty = MathF.Abs(ray.Y) < 1e-5f ? float.PositiveInfinity : extentY / MathF.Abs(ray.Y);
+        return ray * MathF.Min(tx, ty);
     }
 }

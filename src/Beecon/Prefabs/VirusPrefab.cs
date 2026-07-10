@@ -4,10 +4,12 @@ using Beecon.Scenes;
 
 namespace Beecon.Prefabs;
 
-public struct VirusPrefab(VirusType type = VirusType.Normal, int mergeCount = 0) : IPrefab
+public struct VirusPrefab(VirusType type = VirusType.Normal, int mergeCount = 0, int strength = 0)
+    : IPrefab
 {
     public VirusType Type { get; set; } = type;
     public int MergeCount { get; set; } = mergeCount;
+    public int Strength { get; set; } = strength;
 
     private static BatchedSpriteAnimationFrame[] AnimationFrames =>
         field ??= Visuals.Virus.TextureAtlas.GetBatchedSpriteAnimationFrames(0, 3).ToArray();
@@ -39,7 +41,14 @@ public struct VirusPrefab(VirusType type = VirusType.Normal, int mergeCount = 0)
 
         entity
             .SetZIndex(Visuals.Virus.ZIndex)
-            .Set(new Virus { Type = Type, MergeCount = MergeCount })
+            .Set(
+                new Virus
+                {
+                    Type = Type,
+                    MergeCount = MergeCount,
+                    Strength = Strength,
+                }
+            )
             .Set(body)
             .Set(
                 new BatchedSprite(
@@ -52,10 +61,10 @@ public struct VirusPrefab(VirusType type = VirusType.Normal, int mergeCount = 0)
                 )
             )
             .Set(new BatchedSpriteAnimation(AnimationFrames, Visuals.Virus.AnimationDelay))
-            .Set(new Health(HealthOf(Type)))
+            .Set(new Health(HealthOf(Strength)))
             .Set(
                 new Damage(
-                    DamageOf(Type),
+                    DamageOf(Strength),
                     Gameplay.Virus.DamageCooldown,
                     ShapeCategory.Player | ShapeCategory.Bee
                 )
@@ -155,24 +164,14 @@ public struct VirusPrefab(VirusType type = VirusType.Normal, int mergeCount = 0)
         };
     }
 
-    private static float HealthOf(VirusType type)
+    private static float HealthOf(int strength)
     {
-        return type switch
-        {
-            VirusType.Shield => Gameplay.Virus.ShieldHealth,
-            VirusType.Turret => Gameplay.Virus.TurretHealth,
-            _ => Gameplay.Virus.Health,
-        };
+        return Gameplay.Virus.Health + strength * Gameplay.Virus.HealthPerMerge;
     }
 
-    private static float DamageOf(VirusType type)
+    private static float DamageOf(int strength)
     {
-        return type switch
-        {
-            VirusType.Shield => Gameplay.Virus.ShieldDamage,
-            VirusType.Turret => Gameplay.Virus.TurretDamage,
-            _ => Gameplay.Virus.Damage,
-        };
+        return Gameplay.Virus.Damage + strength * Gameplay.Virus.DamagePerMerge;
     }
 
     private static float ExperienceOf(VirusType type)
