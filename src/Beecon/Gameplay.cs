@@ -161,7 +161,7 @@ public static class Gameplay
 
         public static float BeeDamage(int level)
         {
-            return Bee.Damage + 2f * level;
+            return Bee.Damage + 1.5f * level;
         }
 
         public static TimeSpan BeeReload(int level)
