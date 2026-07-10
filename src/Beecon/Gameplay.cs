@@ -44,7 +44,7 @@ public static class Gameplay
         public static float Health => 50f;
         public static float Damage => 15f;
         public static float HealthPerMerge => 40f;
-        public static float DamagePerMerge => 8f;
+        public static float DamagePerMerge => 6f;
         public static float TurretRadius => 30f;
         public static float ShieldRadius => 50f;
         public static TimeSpan DamageCooldown => TimeSpan.FromMilliseconds(200);
@@ -56,9 +56,9 @@ public static class Gameplay
         public static float SpawnMargin => 96f;
         public static float SpawnBias => 2.5f;
         public static int BaseSpawnCount => 1;
-        public static float SpawnCountPerMinute => 1f;
-        public static int BaseMaxCount => 16;
-        public static float MaxCountPerMinute => 16f;
+        public static float SpawnCountPerMinute => 1.5f;
+        public static int BaseMaxCount => 14;
+        public static float MaxCountPerMinute => 20f;
         public static int AbsoluteMaxCount => 300;
         public static float SpawnClearanceRadius => Radius;
         public static float DespawnDistance => 1_400f;
@@ -96,7 +96,7 @@ public static class Gameplay
     {
         public static TimeSpan Interval => TimeSpan.FromMinutes(2);
         public static TimeSpan Duration => TimeSpan.FromSeconds(30);
-        public static float SpawnMultiplier => 4f;
+        public static float SpawnMultiplier => 3f;
     }
 
     public static class Boss
@@ -117,14 +117,14 @@ public static class Gameplay
 
     public static class Turret
     {
-        public static TimeSpan FireInterval => TimeSpan.FromSeconds(0.8);
+        public static TimeSpan FireInterval => TimeSpan.FromSeconds(1.0);
     }
 
     public static class Bullet
     {
         public static float Radius => 4f;
         public static float Health => 10f;
-        public static float Damage => 100f;
+        public static float Damage => 70f;
         public static TimeSpan DamageCooldown => TimeSpan.FromMilliseconds(200);
         public static float Speed => 450f;
         public static float DespawnMargin => 1000f;
@@ -178,15 +178,15 @@ public static class Gameplay
 
         public static float HealthRegen(int level)
         {
-            return 5f * level;
+            return 6f * level;
         }
     }
 
     public static class PowerUp
     {
-        public static float DropChance => 0.0025f;
+        public static float DropChance => 0.00225f;
         public static float Radius => 12f;
-        public static TimeSpan MagnetDuration => TimeSpan.FromSeconds(3.5);
+        public static TimeSpan MagnetDuration => TimeSpan.FromSeconds(4.5);
         public static float NukeDamage => 500f;
     }
 
