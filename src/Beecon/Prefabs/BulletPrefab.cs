@@ -9,7 +9,7 @@ public struct BulletPrefab(Vector2 velocity) : IPrefab
     public Vector2 Velocity { get; set; } = velocity;
 
     private static BatchedSpriteAnimationFrame[] AnimationFrames =>
-        field ??= Visuals.Bullet.TextureAtlas.GetBatchedSpriteAnimationFrames(0, 1).ToArray();
+        field ??= Visuals.Bullet.TextureAtlas.GetBatchedSpriteAnimationFrames(0, 0).ToArray();
 
     private record struct SpriteBatchSingleton(SpriteBatch SpriteBatch);
 
