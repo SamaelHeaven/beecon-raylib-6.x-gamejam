@@ -10,6 +10,13 @@ public sealed class TurretSystem : GameSystem
         .Resource("Audio.shoot.wav")
         .SetVolume(Gameplay.Audio.ShootVolume);
 
+    private ValueHashSet<Entity> _createdBullets = [];
+
+    public TurretSystem()
+    {
+        Order = -1;
+    }
+
     public override void Update()
     {
         var player = Scene.Player;
@@ -22,12 +29,23 @@ public sealed class TurretSystem : GameSystem
                 continue;
             var origin = entity.WorldPosition;
             var direction = (playerPosition - origin).Normalize();
+            var bulletEntity = Scene.Entity();
             new BulletPrefab(direction * Gameplay.Bullet.Speed).Build(
-                Scene.Entity().SetPosition(origin)
+                bulletEntity.SetPosition(origin)
             );
+            _createdBullets.Add(bulletEntity);
+        }
+    }
+
+    public override void PostUpdate()
+    {
+        foreach (var _ in _createdBullets)
+        {
             var pitch =
                 1f + (Random.Shared.NextSingle() * 2f - 1f) * Gameplay.Audio.ShootPitchVariation;
             _shoot.SetPitch(pitch).Play();
         }
+
+        _createdBullets.Clear();
     }
 }

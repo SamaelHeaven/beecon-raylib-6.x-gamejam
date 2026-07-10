@@ -24,7 +24,7 @@ var config = Config
     })
     .Audio(audio =>
     {
-        audio.DefaultSoundMaxAliases = 12;
+        audio.DefaultSoundMaxAliases = 8;
     })
     .Font(font =>
     {
@@ -67,7 +67,7 @@ var config = Config
             new PlayerDamageFlashSystem(),
             new AnnouncementSystem(),
             new GameOverSystem(),
-            new MusicSystem(),
+            new MusicSystem()
         ]
     )
     .Build();

@@ -52,21 +52,21 @@ public static class Gameplay
         public static float MaxSpeed => 75f;
         public static float TurretMaxSpeed => 95f;
         public static float ShieldMaxSpeed => 120f;
-        public static TimeSpan SpawnInterval => TimeSpan.FromSeconds(0.3);
+        public static TimeSpan SpawnInterval => TimeSpan.FromSeconds(0.25);
         public static float SpawnMargin => 96f;
         public static float SpawnBias => 2.5f;
         public static int BaseSpawnCount => 1;
-        public static float SpawnCountPerMinute => 1.5f;
-        public static int BaseMaxCount => 14;
-        public static float MaxCountPerMinute => 20f;
-        public static int AbsoluteMaxCount => 300;
+        public static float SpawnCountPerMinute => 2.5f;
+        public static int BaseMaxCount => 10;
+        public static float MaxCountPerMinute => 14f;
+        public static int AbsoluteMaxCount => 180;
         public static float SpawnClearanceRadius => Radius;
         public static float DespawnDistance => 1_400f;
         public static float MergeGrowth => 4f;
         public static int MergesPerPromotion => 5;
-        public static TimeSpan MergeInterval => TimeSpan.FromSeconds(0.5);
+        public static TimeSpan MergeInterval => TimeSpan.FromSeconds(0.4);
         public static int TurretMergesPerPromotion => 3;
-        public static TimeSpan TurretMergeInterval => TimeSpan.FromSeconds(1.25);
+        public static TimeSpan TurretMergeInterval => TimeSpan.FromSeconds(1.0);
         public static float ExperienceBonus => 5f;
         public static float TurretExperience => 25f;
         public static float ShieldExperience => 60f;
@@ -95,8 +95,8 @@ public static class Gameplay
     public static class Swarm
     {
         public static TimeSpan Interval => TimeSpan.FromMinutes(2);
-        public static TimeSpan Duration => TimeSpan.FromSeconds(30);
-        public static float SpawnMultiplier => 3f;
+        public static TimeSpan Duration => TimeSpan.FromSeconds(45);
+        public static float SpawnMultiplier => 4f;
     }
 
     public static class Boss
@@ -124,7 +124,7 @@ public static class Gameplay
     {
         public static float Radius => 4f;
         public static float Health => 10f;
-        public static float Damage => 70f;
+        public static float Damage => 82f;
         public static TimeSpan DamageCooldown => TimeSpan.FromMilliseconds(200);
         public static float Speed => 450f;
         public static float DespawnMargin => Virus.DespawnDistance;
@@ -184,7 +184,7 @@ public static class Gameplay
 
     public static class PowerUp
     {
-        public static float DropChance => 0.00225f;
+        public static float DropChance => 0.0025f;
         public static float Radius => 12f;
         public static TimeSpan MagnetDuration => TimeSpan.FromSeconds(4.5);
         public static float NukeDamage => 500f;
@@ -192,13 +192,13 @@ public static class Gameplay
 
     public static class Beacon
     {
-        public static int Count => 150;
+        public static int Count => 155;
         public static int Sides => 6;
         public static float Radius => 150f;
         public static TimeSpan ChargeDuration => TimeSpan.FromSeconds(3);
         public static TimeSpan DischargeDuration => TimeSpan.FromSeconds(2);
-        public static int MinBeesBonus => 2;
-        public static int MaxBeesBonus => 10;
+        public static int MinBeesBonus => 1;
+        public static int MaxBeesBonus => 6;
         public static int SpawnMaxAttempts => 32;
     }
 
@@ -207,7 +207,7 @@ public static class Gameplay
         public static TimeSpan HitInterval => TimeSpan.FromMilliseconds(60);
         public static float HitPitchVariation => 0.15f;
         public static float ShootPitchVariation => 0.15f;
-        public static float ShootVolume => 0.2f;
+        public static float ShootVolume => 0.18f;
         public static float ExperiencePitchVariation => 0.15f;
         public static float ExperienceVolume => 0.3f;
     }
