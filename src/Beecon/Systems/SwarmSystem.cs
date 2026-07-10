@@ -6,6 +6,7 @@ namespace Beecon.Systems;
 
 public sealed class SwarmSystem : GameSystem
 {
+    private readonly Sound _swarmSound = Sound.Resource("Audio.swarm.wav");
     private Swarm _swarm = null!;
     private bool _wasActive;
 
@@ -25,7 +26,8 @@ public sealed class SwarmSystem : GameSystem
         switch (_wasActive)
         {
             case false when isActive:
-                Scene.Announce("SWARM", flash: true);
+                Scene.Announce("SWARM", true);
+                _swarmSound.Play();
                 break;
             case true when !isActive:
                 SpawnBoss();

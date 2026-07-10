@@ -141,6 +141,18 @@ public static class Visuals
         public static int ZIndex => 10_000;
     }
 
+    public static class GameOver
+    {
+        public static int ZIndex => Hud.ZIndex + 2;
+        public static float TitleFontSize => 72f;
+        public static Color TitleColor => "#FF6467";
+        public static Vector2 TitleOffset => new(0f, -30f);
+        public static float PromptFontSize => 28f;
+        public static Color PromptColor => Color.White;
+        public static Vector2 PromptOffset => new(0f, 40f);
+        public static TimeSpan PromptDelay => TimeSpan.FromSeconds(1);
+    }
+
     public static class Announcement
     {
         public static int ZIndex => Hud.ZIndex + 1;

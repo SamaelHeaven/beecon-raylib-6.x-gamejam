@@ -41,8 +41,12 @@ public sealed class BeaconSystem : GameSystem
                 if (timer.Update())
                 {
                     beacon.Activated = true;
-                    player.Get<Player>().MaxBees += Gameplay.Beacon.MaxBeesBonus;
-                    Scene.Announce($"+{Gameplay.Beacon.MaxBeesBonus} BEES");
+                    var bonus = Random.Shared.Next(
+                        Gameplay.Beacon.MinBeesBonus,
+                        Gameplay.Beacon.MaxBeesBonus + 1
+                    );
+                    player.Get<Player>().MaxBees += bonus;
+                    Scene.Announce($"+{bonus} BEES");
                 }
             }
             else

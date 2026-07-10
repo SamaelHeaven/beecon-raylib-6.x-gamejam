@@ -12,17 +12,17 @@ public sealed class Player
 
     public bool MagnetActive => MagnetRemaining > TimeSpan.Zero;
 
-    public void ActivateMagnet()
-    {
-        MagnetRemaining = Gameplay.PowerUp.MagnetDuration;
-    }
-
     public float Experience { get; set; }
 
     public float RequiredExperience => Gameplay.Experience.RequiredForLevel(Level);
 
     public float ExperiencePercent =>
         RequiredExperience <= 0f ? 0f : Experience / RequiredExperience * 100f;
+
+    public void ActivateMagnet()
+    {
+        MagnetRemaining = Gameplay.PowerUp.MagnetDuration;
+    }
 
     public void AddExperience(float amount)
     {

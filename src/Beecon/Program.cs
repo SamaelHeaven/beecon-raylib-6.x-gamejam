@@ -22,6 +22,10 @@ var config = Config
         drawing.DefaultCulling = true;
         drawing.RenderTexturePoolLifetime = TimeSpan.FromSeconds(100);
     })
+    .Audio(audio =>
+    {
+        audio.DefaultSoundMaxAliases = 12;
+    })
     .Font(font =>
     {
         font.Default = () => Font.Resource("Font.default.woff");
@@ -62,6 +66,7 @@ var config = Config
             new HealthSystem(),
             new PlayerDamageFlashSystem(),
             new AnnouncementSystem(),
+            new GameOverSystem(),
             new MusicSystem(),
         ]
     )

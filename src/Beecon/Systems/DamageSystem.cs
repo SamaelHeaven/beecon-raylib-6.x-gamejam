@@ -4,7 +4,11 @@ namespace Beecon.Systems;
 
 public sealed class DamageSystem : GameSystem
 {
+    private readonly Sound _playerHit = Sound.Resource("Audio.player-hit.wav");
     private readonly EntitySparseSet<EntitySparseSet<DamageContact>> _targetsByDamager = new();
+    private readonly Sound _virusHit = Sound.Resource("Audio.virus-hit.wav");
+    private TimeSpan _playerHitLast;
+    private TimeSpan _virusHitLast;
 
     public override void WorldSensorBegin(Shape sensor, Shape visitor)
     {
@@ -16,6 +20,7 @@ public sealed class DamageSystem : GameSystem
         if (!target.TryGet(out Health health))
             return;
         health.Damage(damage.Amount);
+        Hit(target);
         if (!_targetsByDamager.TryGetValue(sensor.Entity, out var targets))
             _targetsByDamager[sensor.Entity] = targets = new EntitySparseSet<DamageContact>();
         targets[target] = new DamageContact(damage.Amount, damage.Cooldown);
@@ -55,7 +60,10 @@ public sealed class DamageSystem : GameSystem
                 {
                     contact.Elapsed = TimeSpan.Zero;
                     if (target.TryGet(out Health health))
+                    {
                         health.Damage(contact.Amount);
+                        Hit(target);
+                    }
                 }
 
                 targets[target] = contact;
@@ -64,6 +72,24 @@ public sealed class DamageSystem : GameSystem
             if (targets.Count == 0)
                 _targetsByDamager.Remove(damager);
         }
+    }
+
+    private void Hit(Entity target)
+    {
+        if (target.TryGet(out Player _))
+            TryPlay(_playerHit, ref _playerHitLast);
+        else if (target.TryGet(out Virus _))
+            TryPlay(_virusHit, ref _virusHitLast);
+    }
+
+    private static void TryPlay(Sound sound, ref TimeSpan last)
+    {
+        var now = Time.Elapsed;
+        if (now - last < Gameplay.Audio.HitInterval)
+            return;
+        last = now;
+        var pitch = 1f + (Random.Shared.NextSingle() * 2f - 1f) * Gameplay.Audio.HitPitchVariation;
+        sound.SetPitch(pitch).Play();
     }
 
     private record struct DamageContact(

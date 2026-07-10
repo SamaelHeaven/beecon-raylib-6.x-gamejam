@@ -57,9 +57,9 @@ public static class Gameplay
         public static float SpawnBias => 2.5f;
         public static int BaseSpawnCount => 1;
         public static float SpawnCountPerMinute => 1f;
-        public static int BaseMaxCount => 12;
-        public static float MaxCountPerMinute => 14f;
-        public static int AbsoluteMaxCount => 220;
+        public static int BaseMaxCount => 16;
+        public static float MaxCountPerMinute => 16f;
+        public static int AbsoluteMaxCount => 300;
         public static float SpawnClearanceRadius => Radius;
         public static float DespawnDistance => 1_400f;
         public static float MergeGrowth => 4f;
@@ -127,7 +127,7 @@ public static class Gameplay
         public static float Damage => 100f;
         public static TimeSpan DamageCooldown => TimeSpan.FromMilliseconds(200);
         public static float Speed => 450f;
-        public static float DespawnMargin => 64f;
+        public static float DespawnMargin => 1000f;
     }
 
     public static class Experience
@@ -197,7 +197,18 @@ public static class Gameplay
         public static float Radius => 150f;
         public static TimeSpan ChargeDuration => TimeSpan.FromSeconds(3);
         public static TimeSpan DischargeDuration => TimeSpan.FromSeconds(2);
+        public static int MinBeesBonus => 2;
         public static int MaxBeesBonus => 10;
         public static int SpawnMaxAttempts => 32;
+    }
+
+    public static class Audio
+    {
+        public static TimeSpan HitInterval => TimeSpan.FromMilliseconds(60);
+        public static float HitPitchVariation => 0.15f;
+        public static float ShootPitchVariation => 0.15f;
+        public static float ShootVolume => 0.2f;
+        public static float ExperiencePitchVariation => 0.15f;
+        public static float ExperienceVolume => 0.3f;
     }
 }

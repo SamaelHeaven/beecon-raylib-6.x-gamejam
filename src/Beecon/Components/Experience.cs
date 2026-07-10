@@ -1,6 +1,6 @@
 namespace Beecon.Components;
 
-public sealed class Experience(float amount)
+public readonly struct Experience(float amount)
 {
     public float Amount { get; } = amount;
 }

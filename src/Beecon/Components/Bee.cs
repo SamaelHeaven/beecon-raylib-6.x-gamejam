@@ -1,3 +1,3 @@
 ﻿namespace Beecon.Components;
 
-public sealed class Bee { }
+public readonly struct Bee;

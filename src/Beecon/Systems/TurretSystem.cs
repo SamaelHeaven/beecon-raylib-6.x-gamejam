@@ -6,6 +6,10 @@ namespace Beecon.Systems;
 
 public sealed class TurretSystem : GameSystem
 {
+    private readonly Sound _shoot = Sound
+        .Resource("Audio.shoot.wav")
+        .SetVolume(Gameplay.Audio.ShootVolume);
+
     public override void Update()
     {
         var player = Scene.Player;
@@ -21,6 +25,9 @@ public sealed class TurretSystem : GameSystem
             new BulletPrefab(direction * Gameplay.Bullet.Speed).Build(
                 Scene.Entity().SetPosition(origin)
             );
+            var pitch =
+                1f + (Random.Shared.NextSingle() * 2f - 1f) * Gameplay.Audio.ShootPitchVariation;
+            _shoot.SetPitch(pitch).Play();
         }
     }
 }
