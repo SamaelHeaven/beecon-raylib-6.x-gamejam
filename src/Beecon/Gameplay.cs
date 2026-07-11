@@ -63,8 +63,8 @@ public static class Gameplay
         public static int BaseSpawnCount => 1;
         public static float SpawnCountPerMinute => 2f;
         public static int BaseMaxCount => 12;
-        public static float MaxCountPerMinute => 16f;
-        public static int AbsoluteMaxCount => 500;
+        public static float MaxCountPerMinute => 20f;
+        public static int AbsoluteMaxCount => 700;
         public static float SpawnClearanceRadius => Radius;
         public static float DespawnDistance => 1_400f;
         public static float MergeGrowth => 4f;
@@ -118,8 +118,8 @@ public static class Gameplay
         public static TimeSpan Interval => TimeSpan.FromMinutes(2);
         public static TimeSpan Duration => TimeSpan.FromSeconds(30);
         public static float BaseSpawnMultiplier => 2f;
-        public static float SpawnMultiplierPerMinute => 0.25f;
-        public static float MaxSpawnMultiplier => 8f;
+        public static float SpawnMultiplierPerMinute => 0.3f;
+        public static float MaxSpawnMultiplier => 12f;
 
         public static float SpawnMultiplierAt(TimeSpan elapsed)
         {
