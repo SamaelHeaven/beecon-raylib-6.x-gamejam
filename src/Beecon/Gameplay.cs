@@ -61,7 +61,7 @@ public static class Gameplay
         public static float SpawnMargin => 96f;
         public static float SpawnBias => 2.5f;
         public static int BaseSpawnCount => 1;
-        public static float SpawnCountPerMinute => 1f;
+        public static float SpawnCountPerMinute => 1.35f;
         public static int BaseMaxCount => 12;
         public static float MaxCountPerMinute => 18f;
         public static int AbsoluteMaxCount => 600;
