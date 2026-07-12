@@ -2,8 +2,6 @@
 using Beecon.Scenes;
 using Beecon.Systems;
 
-var scene = MainMenuScene.Build();
-
 var config = Config
     .Builder()
     .Display(display =>
@@ -48,4 +46,4 @@ var config = Config
     )
     .Build();
 
-Game.Launch(config, scene);
+Game.Launch(config, MainMenuScene.Build());
