@@ -18,6 +18,8 @@ public sealed class SwarmSystem : GameSystem
 
     public override void Update()
     {
+        if (Scene.Player.IsNull)
+            return;
         _swarm.Elapsed += Time.Delta;
         var elapsed = _swarm.Elapsed.TotalSeconds;
         var interval = Gameplay.Swarm.Interval.TotalSeconds;
