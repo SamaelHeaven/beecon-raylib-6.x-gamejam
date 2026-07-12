@@ -43,8 +43,8 @@ public static class Gameplay
         public static float Radius => 10f;
         public static float Health => 40f;
         public static float Damage => 12f;
-        public static float HealthPerMerge => 30f;
-        public static float DamagePerMerge => 6f;
+        public static float HealthPerMerge => 25f;
+        public static float DamagePerMerge => 5f;
         public static float TurretRadius => 30f;
         public static float ShieldRadius => 50f;
         public static TimeSpan DamageCooldown => TimeSpan.FromMilliseconds(200);
@@ -61,10 +61,10 @@ public static class Gameplay
         public static float SpawnMargin => 96f;
         public static float SpawnBias => 2.5f;
         public static int BaseSpawnCount => 1;
-        public static float SpawnCountPerMinute => 2f;
+        public static float SpawnCountPerMinute => 1f;
         public static int BaseMaxCount => 12;
-        public static float MaxCountPerMinute => 20f;
-        public static int AbsoluteMaxCount => 700;
+        public static float MaxCountPerMinute => 18f;
+        public static int AbsoluteMaxCount => 600;
         public static float SpawnClearanceRadius => Radius;
         public static float DespawnDistance => 1_400f;
         public static float MergeGrowth => 4f;
