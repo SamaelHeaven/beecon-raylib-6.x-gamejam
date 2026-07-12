@@ -25,7 +25,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Vigilance" Version="0.1.25" />
+    <PackageReference Include="Vigilance" Version="0.1.26" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
